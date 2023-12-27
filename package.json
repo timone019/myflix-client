@@ -16,6 +16,12 @@
   },
   "homepage": "https://github.com/AJSorbello/myflix-client#readme",
   "dependencies": {
-    "package.json": "^0.0.0"
+    "package.json": "^0.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.10.3",
+    "process": "^0.11.10"
   }
 }
