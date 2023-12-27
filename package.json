@@ -7,6 +7,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "AJ",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AJSorbello/myflix-client.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AJSorbello/myflix-client/issues"
+  },
+  "homepage": "https://github.com/AJSorbello/myflix-client#readme"
 }
