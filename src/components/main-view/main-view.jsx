@@ -12,8 +12,9 @@ export const MainView = () => {
       .then((data) => {
         const moviesFromApi = data.docs.map((doc) => {
           return {
-            id: doc.key,
-            title: doc.title,
+            _id: doc.key,
+            Title: doc.title,
+            Description: doc.description,
             image:
               "https://ajmovies-fc7e7627ec3d.herokuapp.com/" + doc.image_url,
             director: doc.director_name?.[0],
