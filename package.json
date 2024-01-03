@@ -18,6 +18,8 @@
   "homepage": "https://github.com/AJSorbello/myflix-client#readme",
   "dependencies": {
     "package.json": "^0.0.0",
+    "parcel": "^2.10.3",
+    "parcel-bundler": "^1.12.5",
     "prop-types": "^15.8.1",
     "react": "18.0.0",
     "react-dom": "18.0.0",
