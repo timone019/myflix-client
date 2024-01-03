@@ -1,33 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 
 export const MainView = () => {
-  const [movies, setMovies] = useState([
-    {
-      id: 1,
-      title: "Predator",
-      image: "https://lumiere-a.akamaihd.net/v1/images/predator_feature-poster_584x800_6ec38255.jpeg?region=0%2C0%2C584%2C800",
-      director: "John McTiernan"
-    },
-     {
-      id: 2,
-      title: "The Terminator",
-      image: "https://m.media-amazon.com/images/I/A1wiVBc2VLL._SL1500_.jpg",
-      director: "James Cameron"
-    },
-       {
-      id: 3,
-      title: "The Wolverine",
-      image: "https://m.media-amazon.com/images/I/91Xul-LKAEL._AC_SY741_.jpg",
-      director: "James Mangold"
-    },
-     ]);
-
+  const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
+
+  useEffect(() => {
+    fetch("https://ajmovies-fc7e7627ec3d.herokuapp.com/")
+      .then((response) => response.json())
+      .then((data) => {
+        const moviesFromApi = data.docs.map((doc) => {
+          return {
+            id: doc.key,
+            title: doc.title,
+            image:
+              "https://ajmovies-fc7e7627ec3d.herokuapp.com/" + doc.image_url,
+            director: doc.director_name?.[0],
+          };
+        });
+        setMovies(moviesFromApi);
+      });
+  }, []);
+
   if (selectedMovie) {
     return (
-      <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+      <MovieView
+        movie={selectedMovie}
+        onBackClick={() => setSelectedMovie(null)}
+      />
     );
   }
   if (movies.length === 0) {
@@ -38,8 +39,7 @@ export const MainView = () => {
       <button
         onClick={() => {
           alert("Nice!");
-        }}
-      >
+        }}>
         Click me!
       </button>
       {movies.map((movie) => (
