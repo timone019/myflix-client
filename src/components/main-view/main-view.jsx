@@ -7,17 +7,18 @@ export const MainView = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
-    fetch("https://ajmovies-fc7e7627ec3d.herokuapp.com/")
+    fetch("https://ajmovies-fc7e7627ec3d.herokuapp.com/movies")
       .then((response) => response.json())
       .then((data) => {
-        const moviesFromApi = data.docs.map((doc) => {
+        const moviesFromApi = data.map((movie) => {
           return {
-            _id: doc.key,
-            Title: doc.title,
-            Description: doc.description,
-            image:
-              "https://ajmovies-fc7e7627ec3d.herokuapp.com/" + doc.image_url,
-            director: doc.director_name?.[0],
+            _id: movie.key,
+            Title: movie.title,
+            Description: movie.description,
+            ImagePath: movie.image,
+            Director: {
+              Name: movie.Director.Name,
+            },
           };
         });
         setMovies(moviesFromApi);
