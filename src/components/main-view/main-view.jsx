@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+import { LoginView } from "../login-view/login-view";
+import { SignupView } from "../signup-view/signup-view";
 
 export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [user, setUser] = useState(null);
+  const [authToken, setAuthToken] = useState(null);
 
   useEffect(() => {
-    fetch("https://ajmovies-fc7e7627ec3d.herokuapp.com/movies")
+    if (!authToken) {
+      return;
+    }
+
+    fetch("https://ajmovies-fc7e7627ec3d.herokuapp.com/movies", {
+      headers: { Authorization: `Bearer ${authToken}` },
+    })
       .then((response) => response.json())
       .then((movies) => {
         const moviesFromApi = movies.map((movie) => ({
           _id: movie._id,
           Title: movie.Title,
           Description: movie.Description,
-          Year: movie.Year,
+          //   Year: movie.Year,
           Genre: {
             Name: movie.Genre.Name,
           },
@@ -23,37 +33,38 @@ export const MainView = () => {
             Bio: movie.Director.Bio,
             Birth: movie.Director.Birth,
           },
+          Featured: movie.Featured,
+          //   ImagePath: movie.ImagePath,
         }));
+
         setMovies(moviesFromApi);
-      });
-  }, []);
+      })
+      .catch((error) => console.error("Error fetching movies:", error));
+  }, [authToken]);
 
-  if (selectedMovie) {
-    // Placeholder comment: Complete the logic for filtering similar movies
-    let similarMovies = movies.filter(
-      (movie) => movie.Genre.Name === selectedMovie.Genre.Name
-    );
+  const handleLogin = (loggedInUser, authToken) => {
+    setUser(loggedInUser);
+    setAuthToken(authToken);
+  };
 
+  if (!user) {
     return (
       <>
-        <MovieView
-          movie={selectedMovie}
-          onBackClicked={() => {
-            setSelectedMovie(null);
-          }}
-        />
-        <hr />
-        <h2>Similar Movies</h2>
-        {similarMovies.map((movie) => (
-          <MovieCard
-            key={movie._id}
-            movie={movie}
-            onMovieClick={(newSelectedMovie) => {
-              setSelectedMovie(newSelectedMovie);
-            }}
-          />
-        ))}
+        <LoginView onLoggedIn={handleLogin} />
+        or
+        <SignupView />
       </>
+    );
+  }
+
+  if (selectedMovie) {
+    return (
+      <MovieView
+        movie={selectedMovie}
+        onBackClicked={() => {
+          setSelectedMovie(null);
+        }}
+      />
     );
   }
 
@@ -63,12 +74,6 @@ export const MainView = () => {
 
   return (
     <div>
-      <button
-        onClick={() => {
-          alert("Nice!");
-        }}>
-        Click me!
-      </button>
       {movies.map((movie) => (
         <MovieCard
           key={movie._id}
@@ -78,6 +83,13 @@ export const MainView = () => {
           }}
         />
       ))}
+      <button
+        onClick={() => {
+          setUser(null);
+          setToken(null);
+        }}>
+        Log out
+      </button>
     </div>
   );
 };
