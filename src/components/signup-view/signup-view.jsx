@@ -55,7 +55,7 @@ export const SignupView = () => {
           type="text"
           placeholder="Username"
           value={username}
-          minLength="6"
+          minLength="4"
           pattern="^[a-zA-Z0-9]+$"
           title="Username can only contain letters and numbers"
           onChange={(event) => setUsername(event.target.value)}
@@ -76,8 +76,8 @@ export const SignupView = () => {
           type="password"
           placeholder="Password"
           value={password}
-          minLength={8}
-          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          minLength={6}
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
           onChange={(event) => setPassword(event.target.value)}
         />
@@ -87,7 +87,7 @@ export const SignupView = () => {
         <Form.Control
           type="date"
           placeholder="Birthday"
-          value={Birthday}
+          value={birthday}
           onChange={(event) => setBirthday(event.target.value)}
         />
       </Form.Group>
