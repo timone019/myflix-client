@@ -28,7 +28,7 @@ export const MainView = () => {
           _id: movie._id,
           Title: movie.Title,
           Description: movie.Description,
-          //   Year: movie.Year,
+          // Year: movie.Year,
           Genre: {
             Name: movie.Genre.Name,
           },
@@ -38,7 +38,7 @@ export const MainView = () => {
             Birth: movie.Director.Birth,
           },
           Featured: movie.Featured,
-          //   ImagePath: movie.ImagePath,
+          ImagePath: movie.ImagePath,
         }));
 
         setMovies(moviesFromApi);
@@ -50,50 +50,56 @@ export const MainView = () => {
     setUser(loggedInUser);
     setAuthToken(authToken);
   };
-
-  if (!user) {
-    return (
-      <>
-        <LoginView onLoggedIn={handleLogin} />
-        or
-        <SignupView />
-      </>
-    );
-  }
-
-  if (selectedMovie) {
-    return (
-      <MovieView
-        movie={selectedMovie}
-        onBackClicked={() => {
-          setSelectedMovie(null);
-        }}
-      />
-    );
-  }
-
-  if (movies.length === 0) {
-    return <div>The list is empty!</div>;
-  }
-
   return (
-    <div>
-      {movies.map((movie) => (
-        <MovieCard
-          key={movie._id}
-          movie={movie}
-          onMovieClick={(newSelectedMovie) => {
-            setSelectedMovie(newSelectedMovie);
+    <Row>
+      {!user ? (
+        <>
+          <Col md={6}>
+            <LoginView
+              onLoggedIn={(user, token) => {
+                setUser(user);
+                setToken(token);
+              }}
+            />
+            or
+            <SignupView />
+          </Col>
+        </>
+      ) : selectedMovie ? (
+        <Col md={8} style={{ border: "1px solid black" }}>
+          <MovieView
+            style={{ border: "1px solid green" }}
+            movie={selectedMovie}
+            onBackClicked={() => setSelectedMovie(null)}
+          />
+        </Col>
+      ) : movies.length === 0 ? (
+        <div>The list is empty!</div>
+      ) : (
+        <>
+          {movies.map((movie) => (
+            <Col md={8} key={movie._id}>
+              <MovieCard
+                movie={movie}
+                onMovieClick={(newSelectedMovie) => {
+                  setSelectedMovie(newSelectedMovie);
+                }}
+              />
+            </Col>
+          ))}
+        </>
+      )}
+      {user && (
+        <button
+          onClick={() => {
+            setUser(null);
+            setToken(null);
           }}
-        />
-      ))}
-      <button
-        onClick={() => {
-          setUser(null);
-          setToken(null);
-        }}>
-        Log out
-      </button>
-    </div>
+          className="logout-button"
+          style={{ cursor: "pointer" }}>
+          Log out
+        </button>
+      )}
+    </Row>
   );
 };
