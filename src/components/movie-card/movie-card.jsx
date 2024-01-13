@@ -3,7 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
 
-const MovieCard = ({ movie, onMovieClick }) => {
+export const MovieCard = ({ movie, onMovieClick }) => {
   return (
     <Card>
       <Card.Img variant="top" src={movie.ImagePath} />

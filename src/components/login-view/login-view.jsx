@@ -1,5 +1,4 @@
 import { useState } from "react";
-//import { Form } from "react-bootstrap/lib/Navbar";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
@@ -25,13 +24,9 @@ export const LoginView = ({ onLoggedIn }) => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Login response: ", data);
-
         if (data.user) {
-          // Store user and token in local storage
           localStorage.setItem("user", JSON.stringify(data.user));
           localStorage.setItem("token", data.token);
-
-          // Call onLoggedIn with user and token
           onLoggedIn(data.user, data.token);
         } else {
           alert("No such user");
@@ -51,7 +46,7 @@ export const LoginView = ({ onLoggedIn }) => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
-          minLength="3"
+          minLength="5"
         />
       </Form.Group>
 

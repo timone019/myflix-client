@@ -5,6 +5,7 @@ import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 // import "./main-view.scss";
 
 export const MainView = () => {
@@ -15,21 +16,24 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
+  // connect app to api with hook
   useEffect(() => {
     if (!token) {
       return;
     }
 
     fetch("https://ajmovies-fc7e7627ec3d.herokuapp.com/movies", {
-      headers: { Authorization: `Bearer ${authToken}` },
+      headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
-      .then((movies) => {
-        const moviesFromApi = movies.map((movie) => ({
+      .then((movie) => {
+        console.log(movie);
+        const moviesFromApi = movie.map((movie) => ({
           _id: movie._id,
           Title: movie.Title,
+          ImagePath: movie.ImagePath,
           Description: movie.Description,
-          // Year: movie.Year,
+          Year: movie.Year,
           Genre: {
             Name: movie.Genre.Name,
           },
@@ -39,23 +43,19 @@ export const MainView = () => {
             Birth: movie.Director.Birth,
           },
           Featured: movie.Featured,
-          ImagePath: movie.ImagePath,
         }));
 
         setMovies(moviesFromApi);
-      })
-      .catch((error) => console.error("Error fetching movies:", error));
-  }, [authToken]);
+      });
 
-  const handleLogin = (loggedInUser, authToken) => {
-    setUser(loggedInUser);
-    setAuthToken(authToken);
-  };
+    // .catch((error) => console.error("Error fetching movies:", error));
+  }, [token]);
+
   return (
-    <Row className="justify-content-md-center">
+    <Row className="justify-content-md-center mb-5">
       {!user ? (
         <>
-          <Col md={6}>
+          <Col md={3}>
             <LoginView
               onLoggedIn={(user, token) => {
                 setUser(user);
