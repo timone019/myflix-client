@@ -5,8 +5,8 @@ import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-// import "./main-view.scss";
+// import Button from "react-bootstrap/Button";
+import "./main-view.scss";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -26,14 +26,14 @@ export const MainView = () => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
-      .then((movie) => {
-        console.log(movie);
-        const moviesFromApi = movie.map((movie) => ({
+      .then((movies) => {
+        console.log(movies);
+        const moviesFromApi = movies.map((movie) => ({
           _id: movie._id,
           Title: movie.Title,
           ImagePath: movie.ImagePath,
           Description: movie.Description,
-          Year: movie.Year,
+          // Year: movie.Year,
           Genre: {
             Name: movie.Genre.Name,
           },
@@ -52,10 +52,10 @@ export const MainView = () => {
   }, [token]);
 
   return (
-    <Row className="justify-content-md-center mb-5">
+    <Row className="justify-content-md-center">
       {!user ? (
         <>
-          <Col md={3}>
+          <Col md={5}>
             <LoginView
               onLoggedIn={(user, token) => {
                 setUser(user);
@@ -69,9 +69,8 @@ export const MainView = () => {
       ) : selectedMovie ? (
         <Col md={8} style={{ border: "1px solid black" }}>
           <MovieView
-            style={{ border: "1px solid green" }}
             movie={selectedMovie}
-            onBackClicked={() => setSelectedMovie(null)}
+            onBackClick={() => setSelectedMovie(null)}
           />
         </Col>
       ) : movies.length === 0 ? (
@@ -79,7 +78,7 @@ export const MainView = () => {
       ) : (
         <>
           {movies.map((movie) => (
-            <Col md={8} key={movie._id}>
+            <Col className="mb-5" key={movie._id} md={3}>
               <MovieCard
                 movie={movie}
                 onMovieClick={(newSelectedMovie) => {
@@ -96,7 +95,7 @@ export const MainView = () => {
             setUser(null);
             setToken(null);
           }}
-          className="logout-button"
+          className="logout-button mb-3"
           style={{ cursor: "pointer" }}>
           Log out
         </button>

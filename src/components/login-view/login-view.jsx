@@ -10,8 +10,8 @@ export const LoginView = ({ onLoggedIn }) => {
     event.preventDefault();
 
     const data = {
-      access: username,
-      secret: password,
+      Username: username,
+      Password: password,
     };
 
     fetch("https://ajmovies-fc7e7627ec3d.herokuapp.com/login", {
@@ -46,7 +46,7 @@ export const LoginView = ({ onLoggedIn }) => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
-          minLength="5"
+          placeholder="Enter username"
         />
       </Form.Group>
 
@@ -59,10 +59,11 @@ export const LoginView = ({ onLoggedIn }) => {
           required
         />
       </Form.Group>
-
-      <Button variant="primary" type="submit">
-        Login
-      </Button>
+      <div>
+        <Button className="login-button mt-3" variant="primary" type="submit">
+          Login
+        </Button>
+      </div>
     </Form>
   );
 };
