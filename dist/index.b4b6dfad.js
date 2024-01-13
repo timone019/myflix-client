@@ -28620,7 +28620,7 @@ const SignupView = ()=>{
                         type: "text",
                         placeholder: "Username",
                         value: username,
-                        minLength: "4",
+                        minLength: "3",
                         pattern: "^[a-zA-Z0-9]+$",
                         title: "Username can only contain letters and numbers",
                         onChange: (event)=>setUsername(event.target.value)

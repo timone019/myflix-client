@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import "./main-view.scss";
+// import "./main-view.scss";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(storedToken ? storedToken : null);
+  const [user, setUser] = useState(storedUser ? storedUser : null);
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    if (!authToken) {
+    if (!token) {
       return;
     }
 
@@ -52,7 +52,7 @@ export const MainView = () => {
     setAuthToken(authToken);
   };
   return (
-    <Row>
+    <Row className="justify-content-md-center">
       {!user ? (
         <>
           <Col md={6}>

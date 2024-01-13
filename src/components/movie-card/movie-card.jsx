@@ -1,5 +1,5 @@
 import React from "react";
-import "./movie-card.scss";
+// import "./movie-card.scss";
 import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
 
