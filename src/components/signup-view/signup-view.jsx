@@ -1,6 +1,14 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import PropTypes from "prop-types";
+import {
+  Form,
+  Button,
+  Card,
+  CardGroup,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap";
 // import Alert from "react-bootstrap/Alert";
 
 export const SignupView = () => {
@@ -31,78 +39,117 @@ export const SignupView = () => {
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((response) => {
-      if (response.ok) {
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
         alert("Signup successful");
         window.location.reload();
-      } else {
+      })
+      .catch((error) => {
+        console.error(
+          "There has been a problem with your fetch operation:",
+          error
+        );
         alert("Signup failed");
-      }
-    });
+      });
   };
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="signupformFullName">
-        <Form.Label>Full Name:</Form.Label>
-        <Form.Control
-          type="text"
-          value={fullName}
-          placeholder="First & Last Name"
-          onChange={(e) => setFullName(e.target.value)}
-          required
-        />
-      </Form.Group>
+    <Container>
+      <Row>
+        <Col>
+          <CardGroup>
+            <Card>
+              <Card.Title>Complete Form Below To Sign Up</Card.Title>
+              <Card.Body>
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group className="mb-3" controlId="signupformFullName">
+                    <Form.Label>Full Name:</Form.Label>
+                    <Form.Control
+                      type="text"
+                      aria-label="Full Name"
+                      aria-required="true"
+                      value={fullName}
+                      placeholder="First & Last Name"
+                      onChange={(e) => setFullName(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
 
-      <Form.Group controlId="signupformUsername">
-        <Form.Label>Username:</Form.Label>
-        <Form.Control
-          type="text"
-          value={username}
-          minLength="6"
-          pattern="^[a-zA-Z0-9]+$"
-          title="Username can only contain letters and numbers"
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-      </Form.Group>
+                  <Form.Group controlId="signupformUsername">
+                    <Form.Label>Username:</Form.Label>
+                    <Form.Control
+                      type="text"
+                      aria-label="Username"
+                      aria-required="true"
+                      value={username}
+                      placeholder="Create Username"
+                      minLength="6"
+                      pattern="^[a-zA-Z0-9]+$"
+                      title="Username can only contain letters and numbers"
+                      onChange={(e) => setUsername(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
 
-      <Form.Group controlId="signupformPassword">
-        <Form.Label>Password:</Form.Label>
-        <Form.Control
-          type="password"
-          value={password}
-          minLength="8"
-          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}"
-          title="Must contain at least one number and one uppercase and lowercase letter, and at least one special character and 8 or more characters."
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </Form.Group>
+                  <Form.Group controlId="signupformPassword">
+                    <Form.Label>Password:</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Create Password"
+                      aria-label="Password"
+                      aria-required="true"
+                      value={password}
+                      minLength="8"
+                      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}"
+                      title="Must contain at least one number and one uppercase and lowercase letter, and at least one special character and 8 or more characters."
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
 
-      <Form.Group controlId="signupformEmail">
-        <Form.Label>Email:</Form.Label>
-        <Form.Control
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </Form.Group>
+                  <Form.Group className="mb-3" controlId="signupformEmail">
+                    <Form.Label>Email:</Form.Label>
+                    <Form.Control
+                      type="email"
+                      aria-label="Email"
+                      aria-required="true"
+                      value={email}
+                      placeholder="Enter Your Email"
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
 
-      <Form.Group controlId="signupformBirthday">
-        <Form.Label>Birthday:</Form.Label>
-        <Form.Control
-          type="date"
-          value={birthday}
-          onChange={(e) => setBirthday(e.target.value)}
-          required
-        />
-      </Form.Group>
-      <div>
-        <Button className="signup-button mt-3" variant="primary" type="submit">
-          Sign Up
-        </Button>
-      </div>
-    </Form>
+                  <Form.Group className="mb-3" controlId="signupformBirthday">
+                    <Form.Label>Birthday:</Form.Label>
+                    <Form.Control
+                      type="date"
+                      aria-label="Birthday"
+                      aria-required="true"
+                      value={birthday}
+                      onChange={(e) => setBirthday(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
+                  <div>
+                    <Button
+                      className="signup-button mt-3"
+                      variant="primary"
+                      type="submit">
+                      Sign Up
+                    </Button>
+                  </div>
+                </Form>
+              </Card.Body>
+            </Card>
+          </CardGroup>
+        </Col>
+      </Row>
+    </Container>
   );
 };

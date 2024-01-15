@@ -5,7 +5,7 @@ import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-// import Button from "react-bootstrap/Button";
+import Button from "react-bootstrap/Button";
 import "./main-view.scss";
 
 export const MainView = () => {
@@ -51,6 +51,39 @@ export const MainView = () => {
     // .catch((error) => console.error("Error fetching movies:", error));
   }, [token]);
 
+  if (selectedMovie) {
+    let similarMovies = movies.filter(
+      (movie) => movie.Genre.Name === selectedMovie.Genre.Name
+    );
+    similarMovies = similarMovies.filter(
+      (movie) => movie._id !== selectedMovie._id
+    );
+    similarMovies = similarMovies.slice(0, 4);
+
+    return (
+      <>
+        <MovieView
+          movie={selectedMovie}
+          onBackClick={() => setSelectedMovie(null)}
+        />
+        <hr />
+        <h2>Similar movies</h2>
+        <Row>
+          {similarMovies.map((movie) => (
+            <Col className="mb-5" key={movie._id} md={3}>
+              <MovieCard
+                movie={movie}
+                onMovieClick={(newSelectedMovie) => {
+                  setSelectedMovie(newSelectedMovie);
+                }}
+              />
+            </Col>
+          ))}
+        </Row>
+      </>
+    );
+  }
+
   return (
     <Row className="justify-content-md-center">
       {!user ? (
@@ -62,7 +95,7 @@ export const MainView = () => {
                 setToken(token);
               }}
             />
-            or
+            or Sign Up Here
             <SignupView />
           </Col>
         </>
@@ -90,15 +123,17 @@ export const MainView = () => {
         </>
       )}
       {user && (
-        <button
-          onClick={() => {
-            setUser(null);
-            setToken(null);
-          }}
-          className="logout-button mb-3"
-          style={{ cursor: "pointer" }}>
-          Log out
-        </button>
+        <footer className="d-flex justify-content-center align-items-center">
+          <button
+            onClick={() => {
+              setUser(null);
+              setToken(null);
+            }}
+            className="logout-button md-4 mb-3"
+            style={{ cursor: "pointer", width: "100px", height: "40px" }}>
+            Log out
+          </button>
+        </footer>
       )}
     </Row>
   );

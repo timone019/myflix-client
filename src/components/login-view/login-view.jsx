@@ -1,6 +1,13 @@
 import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import {
+  Form,
+  Button,
+  Card,
+  CardGroup,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap";
 
 export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("");
@@ -38,32 +45,52 @@ export const LoginView = ({ onLoggedIn }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="formUsername">
-        <Form.Label>Username:</Form.Label>
-        <Form.Control
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-          placeholder="Enter username"
-        />
-      </Form.Group>
+    <Container>
+      <Row>
+        <Col>
+          <CardGroup>
+            <Card>
+              <Card.Body>
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group controlId="formUsername">
+                    <Form.Label>Username:</Form.Label>
+                    <Form.Control
+                      type="text"
+                      aria-label={username}
+                      aria-required="true"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      required
+                      placeholder="Enter username"
+                    />
+                  </Form.Group>
 
-      <Form.Group controlId="formPassword">
-        <Form.Label>Password:</Form.Label>
-        <Form.Control
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </Form.Group>
-      <div>
-        <Button className="login-button mt-3" variant="primary" type="submit">
-          Login
-        </Button>
-      </div>
-    </Form>
+                  <Form.Group controlId="formPassword">
+                    <Form.Label>Password:</Form.Label>
+                    <Form.Control
+                      type="password"
+                      aria-label={password} // "password"
+                      aria-required="true"
+                      value={password}
+                      placeholder="Enter Password"
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
+                  <div>
+                    <Button
+                      className="login-button mt-3"
+                      variant="primary"
+                      type="submit">
+                      Login
+                    </Button>
+                  </div>
+                </Form>
+              </Card.Body>
+            </Card>
+          </CardGroup>
+        </Col>
+      </Row>
+    </Container>
   );
 };
