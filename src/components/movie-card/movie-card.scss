@@ -1,0 +1,16 @@
+.open-button {
+  padding: 4px 12px 4px 12px;
+  color: whitesmoke;
+    background-color: dodgerblue;
+    border: none;
+    border-radius: 4px;
+}
+.movie-card {
+  height: 100%;
+}
+
+.movie-card img {
+  object-fit: cover; // Ensures the image covers the entire container
+  height: 200px; // Set a fixed height for uniformity (adjust as needed)
+  width: 100%;
+}

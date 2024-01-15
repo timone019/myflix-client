@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-//import { Form } from "react-bootstrap/lib/Navbar";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
@@ -11,8 +10,8 @@ export const LoginView = ({ onLoggedIn }) => {
     event.preventDefault();
 
     const data = {
-      access: username,
-      secret: password,
+      Username: username,
+      Password: password,
     };
 
     fetch("https://ajmovies-fc7e7627ec3d.herokuapp.com/login", {
@@ -25,13 +24,9 @@ export const LoginView = ({ onLoggedIn }) => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Login response: ", data);
-
         if (data.user) {
-          // Store user and token in local storage
           localStorage.setItem("user", JSON.stringify(data.user));
           localStorage.setItem("token", data.token);
-
-          // Call onLoggedIn with user and token
           onLoggedIn(data.user, data.token);
         } else {
           alert("No such user");
@@ -51,7 +46,7 @@ export const LoginView = ({ onLoggedIn }) => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
-          minLength="3"
+          placeholder="Enter username"
         />
       </Form.Group>
 
@@ -64,10 +59,11 @@ export const LoginView = ({ onLoggedIn }) => {
           required
         />
       </Form.Group>
-
-      <Button variant="primary" type="submit">
-        Login
-      </Button>
+      <div>
+        <Button className="login-button mt-3" variant="primary" type="submit">
+          Login
+        </Button>
+      </div>
     </Form>
   );
 };
