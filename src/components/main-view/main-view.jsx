@@ -95,7 +95,7 @@ export const MainView = () => {
                 setToken(token);
               }}
             />
-            or Sign Up Here
+            <br />
             <SignupView />
           </Col>
         </>
