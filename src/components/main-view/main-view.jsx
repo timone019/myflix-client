@@ -6,7 +6,7 @@ import { SignupView } from "../signup-view/signup-view";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "./main-view.scss";
-import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
+import { Routes, Route, Navigate, BrowserRouter, useParams } from "react-router-dom";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { Container } from "react-bootstrap";
 
@@ -90,22 +90,28 @@ export const MainView = () => {
                     <Navigate to="/" />
                   ) : (
                     <Col md={5}>
-                      <LoginView onLoggedIn={(user) => setUser(user)} />
+                      <LoginView onLoggedIn={(user, token) => {
+                        setUser(user);
+                        setToken(token);
+                      }} 
+                      />
                     </Col>
                   )}
                 </>
               }
             />
             <Route
-              path="/movies/:movieid"
+              path="/movies/:title"
               element={
-                user ? (
+                <>
+                {!user ? (
                   <Navigate to="/login" replace />
                 ) : movies.length === 0 ? (
                   <Col>The list is empty!</Col>
                 ) : (
-                  <MovieView token={token} setUser={setUser} />
-                )
+                  <MovieView token={token} movies={movies.find(movie => movie.Title === useParams().title)} />
+                  )}
+                </>
               }
             />
 

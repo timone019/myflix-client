@@ -6,32 +6,40 @@ import { useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 
 export const MovieView = ({ token }) => {
-  const { movieid } = useParams();
+  const { title } = useParams();
   const [movie, setMovie] = useState(null);
   const [similarMovies, setSimilarMovies] = useState([]);
+console.log (title);
 
   useEffect(() => {
-    // Fetch the movie from your API using the movieid
-    fetch(`https://myflix-movies.herokuapp.com/movies/${movieid}`, {
+    
+    // Fetch the movie from your API using the title
+    fetch(`https://ajmovies-fc7e7627ec3d.herokuapp.com/movies/${title}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log("response", data);
         setMovie(data);
-      });
+      
     // Fetch similar movies
-    fetch(`https://myflix-movies.herokuapp.com/movies/${movieid}/similar`, {
+    fetch(`https://ajmovies-fc7e7627ec3d.herokuapp.com/movies/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
-      .then((data) => {
-        setSimilarMovies(data);
+      .then((allMovies) => {
+      
+        const similarMovies = allMovies.filter( 
+          (m) => m.Genre.Name === data?.Genre?.Name && m._id !== data._id);
+        // console.log('similarMovies', similarMovies);
+        setSimilarMovies(similarMovies);
       });
-  }, [movieid, token]);
+    })
+  }, []);
 
   if (!movie) return null;
 
@@ -64,7 +72,6 @@ export const MovieView = ({ token }) => {
       </p>
 
       <div style={{ textAlign: "center" }}>
-        {/* ...existing code... */}
         <div>
           <h2>Similar Movies</h2>
           {similarMovies.map((similarMovie) => (

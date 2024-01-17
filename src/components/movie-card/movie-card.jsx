@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export const MovieCard = ({ movie }) => {
   return (
-    <Link to={`/movies/${movie._id}`}>
+   
       <Card className="h-100">
         <Card.Img
           variant="top"
@@ -24,12 +24,12 @@ export const MovieCard = ({ movie }) => {
         </Card.Body>
 
         <Card.Footer>
-          <Link to={`/movies/${movie._id}`}>
+          <Link to={`/movies/${movie.Title}`}>
             <Button>Open</Button>
           </Link>
         </Card.Footer>
       </Card>
-    </Link>
+  
   );
 };
 
