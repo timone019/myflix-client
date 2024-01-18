@@ -3,10 +3,17 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
+import { ProfileView } from "../profile-view/profile-view";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "./main-view.scss";
-import { Routes, Route, Navigate, BrowserRouter, useParams } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  BrowserRouter,
+  useParams,
+} from "react-router-dom";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { Container } from "react-bootstrap";
 
@@ -82,6 +89,9 @@ export const MainView = () => {
                 </>
               }
             />
+
+            <Route path="/profile" element={<ProfileView user={user} />} />
+
             <Route
               path="/login"
               element={
@@ -90,10 +100,11 @@ export const MainView = () => {
                     <Navigate to="/" />
                   ) : (
                     <Col md={5}>
-                      <LoginView onLoggedIn={(user, token) => {
-                        setUser(user);
-                        setToken(token);
-                      }} 
+                      <LoginView
+                        onLoggedIn={(user, token) => {
+                          setUser(user);
+                          setToken(token);
+                        }}
                       />
                     </Col>
                   )}
@@ -104,12 +115,17 @@ export const MainView = () => {
               path="/movies/:title"
               element={
                 <>
-                {!user ? (
-                  <Navigate to="/login" replace />
-                ) : movies.length === 0 ? (
-                  <Col>The list is empty!</Col>
-                ) : (
-                  <MovieView token={token} movies={movies.find(movie => movie.Title === useParams().title)} />
+                  {!user ? (
+                    <Navigate to="/login" replace />
+                  ) : movies.length === 0 ? (
+                    <Col>The list is empty!</Col>
+                  ) : (
+                    <MovieView
+                      token={token}
+                      movies={movies.find(
+                        (movie) => movie.Title === useParams().title
+                      )}
+                    />
                   )}
                 </>
               }
