@@ -4,15 +4,15 @@ import PropTypes from "prop-types";
 import { useParams, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 export const MovieView = ({ token }) => {
   const { title } = useParams();
   const [movie, setMovie] = useState(null);
   const [similarMovies, setSimilarMovies] = useState([]);
-console.log (title);
+  const [addFavoriteMovie, removeFavoriteMovie] = useState();
 
   useEffect(() => {
-    
     // Fetch the movie from your API using the title
     fetch(`https://ajmovies-fc7e7627ec3d.herokuapp.com/movies/${title}`, {
       headers: {
@@ -23,22 +23,22 @@ console.log (title);
       .then((data) => {
         console.log("response", data);
         setMovie(data);
-      
-    // Fetch similar movies
-    fetch(`https://ajmovies-fc7e7627ec3d.herokuapp.com/movies/`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((allMovies) => {
-      
-        const similarMovies = allMovies.filter( 
-          (m) => m.Genre.Name === data?.Genre?.Name && m._id !== data._id);
-        // console.log('similarMovies', similarMovies);
-        setSimilarMovies(similarMovies);
+
+        // Fetch similar movies
+        fetch(`https://ajmovies-fc7e7627ec3d.herokuapp.com/movies/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((allMovies) => {
+            const similarMovies = allMovies.filter(
+              (m) => m.Genre.Name === data?.Genre?.Name && m._id !== data._id
+            );
+            // console.log('similarMovies', similarMovies);
+            setSimilarMovies(similarMovies);
+          });
       });
-    })
   }, []);
 
   if (!movie) return null;
@@ -53,6 +53,16 @@ console.log (title);
         />
       </div>
       <br />
+      <div>
+        {addFavoriteMovie ? (
+          <Button onClick={() => addFavoriteMovie(movie_id)} />
+        ) : (
+          removeFavoriteMovie && (
+            <Button onClick={() => removeFavoriteMovie(movie_id)} />
+          )
+        )}
+      </div>
+
       <div>
         <span>
           <h1> {movie.Title}</h1>

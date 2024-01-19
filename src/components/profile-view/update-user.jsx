@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-const UpdateUser = ({ user, onUpdateUser }) => {
+const UpdateUser = ({ user, setUser }) => {
   const [updatedUser, setUpdatedUser] = useState({
-    username: user.username,
-    password: user.password,
-    email: user.email,
+    Username: user.Username,
+    Password: user.Password,
+    Email: user.Email,
     // Add more fields as needed
   });
 
@@ -22,7 +22,7 @@ const UpdateUser = ({ user, onUpdateUser }) => {
     const token = localStorage.getItem("token");
     try {
       const response = await fetch(
-        `https://myflix-movies.herokuapp.com/users/${user.username}`,
+        `https://ajmovies-fc7e7627ec3d.herokuapp.com/users/${user.Username}`,
         {
           method: "PUT",
           headers: {
@@ -36,7 +36,7 @@ const UpdateUser = ({ user, onUpdateUser }) => {
       if (response.ok) {
         const updatedUserData = await response.json();
         // Update user state in parent component or trigger a callback
-        onUpdateUser(updatedUserData);
+        setUser(updatedUserData);
         console.log("User updated successfully:", updatedUserData);
       } else {
         console.error("Error updating user:", response.statusText);
@@ -54,8 +54,8 @@ const UpdateUser = ({ user, onUpdateUser }) => {
           <Form.Label>Username:</Form.Label>
           <Form.Control
             type="text"
-            name="username"
-            defaultValue={user.username}
+            name="Username"
+            defaultValue={user.Username}
             onChange={(e) => handleUpdate(e)}
             required
             placeholder="Enter a username"
@@ -65,7 +65,7 @@ const UpdateUser = ({ user, onUpdateUser }) => {
           <Form.Label>Password:</Form.Label>
           <Form.Control
             type="password"
-            name="password"
+            name="Password"
             defaultValue=""
             onChange={(e) => handleUpdate(e)}
             required
@@ -78,8 +78,8 @@ const UpdateUser = ({ user, onUpdateUser }) => {
           <Form.Label>Email Address:</Form.Label>
           <Form.Control
             type="email"
-            name="email"
-            defaultValue={user.email} // This is a controlled component
+            name="Email"
+            defaultValue={user.Email} // This is a controlled component
             onChange={(e) => handleUpdate(e)}
             required
             placeholder="Enter an email address"

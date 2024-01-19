@@ -90,7 +90,12 @@ export const MainView = () => {
               }
             />
 
-            <Route path="/profile" element={<ProfileView user={user} />} />
+            <Route
+              path="/profile"
+              element={
+                <ProfileView user={user} setUser={setUser} movies={movies} />
+              }
+            />
 
             <Route
               path="/login"

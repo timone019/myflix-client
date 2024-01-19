@@ -6,30 +6,28 @@ import { Link } from "react-router-dom";
 
 export const MovieCard = ({ movie }) => {
   return (
-   
-      <Card className="h-100">
-        <Card.Img
-          variant="top"
-          src={movie.ImagePath}
-          style={{
-            display: "block",
-            marginLeft: "auto",
-            marginRight: "auto",
-            width: "100%",
-            height: "auto",
-          }}
-        />
-        <Card.Body>
-          <Card.Title>{movie.Title}</Card.Title>
-        </Card.Body>
+    <Card className="h-100">
+      <Card.Img
+        variant="top"
+        src={movie.ImagePath}
+        style={{
+          display: "block",
+          marginLeft: "auto",
+          marginRight: "auto",
+          width: "100%",
+          height: "auto",
+        }}
+      />
+      <Card.Body>
+        <Card.Title>{movie.Title}</Card.Title>
+      </Card.Body>
 
-        <Card.Footer>
-          <Link to={`/movies/${movie.Title}`}>
-            <Button>Open</Button>
-          </Link>
-        </Card.Footer>
-      </Card>
-  
+      <Card.Footer>
+        <Link to={`/movies/${movie.Title}`}>
+          <Button>Open</Button>
+        </Link>
+      </Card.Footer>
+    </Card>
   );
 };
 

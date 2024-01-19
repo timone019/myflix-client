@@ -25,7 +25,7 @@ const FavoriteMovies = ({ user, removeFav }) => {
         console.error("Error:", error);
         setLoading(false);
       });
-  }, [user.FavoriteMovies]);
+  }, [FavoriteMovies]);
 
   return (
     <div>
