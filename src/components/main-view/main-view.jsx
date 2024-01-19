@@ -23,7 +23,7 @@ export const MainView = () => {
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [movies, setMovies] = useState([]);
-
+  const { title } = useParams();
   // connect app to api with hook
   useEffect(() => {
     if (!token) {
@@ -122,9 +122,7 @@ export const MainView = () => {
                   ) : (
                     <MovieView
                       token={token}
-                      movies={movies.find(
-                        (movie) => movie.Title === useParams().title
-                      )}
+                      movies={movies.find((movie) => movie.Title === title)} // Use the variable here
                     />
                   )}
                 </>
