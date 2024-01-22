@@ -7,6 +7,7 @@ const UpdateUser = ({ user, setUser }) => {
     Username: user.Username,
     Password: user.Password,
     Email: user.Email,
+    Birthday: user.Birthday,
     // Add more fields as needed
   });
 
@@ -73,7 +74,6 @@ const UpdateUser = ({ user, setUser }) => {
             placeholder="Password must be 8 or more characters"
           />
         </Form.Group>
-
         <Form.Group>
           <Form.Label>Email Address:</Form.Label>
           <Form.Control
@@ -85,6 +85,18 @@ const UpdateUser = ({ user, setUser }) => {
             placeholder="Enter an email address"
           />
         </Form.Group>
+        <Form.Group>
+          <Form.Label>Birthday:</Form.Label>
+          <Form.Control
+            type="birthday"
+            name="Birthday"
+            defaultValue={user.Birthday} // This is a controlled component
+            onChange={(e) => handleUpdate(e)}
+            required
+            placeholder="Birthday"
+          />
+        </Form.Group>
+
         {/* Add more Form.Group elements for additional fields */}
         <Button variant="primary" type="submit" onClick={handleSubmit}>
           Save Changes
