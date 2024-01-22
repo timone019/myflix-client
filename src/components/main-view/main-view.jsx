@@ -16,7 +16,6 @@ import {
 } from "react-router-dom";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { Container } from "react-bootstrap";
-
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
@@ -24,6 +23,61 @@ export const MainView = () => {
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [movies, setMovies] = useState([]);
   const { title } = useParams();
+
+  // add favorite movie
+  const addFav = (movie_id) => {
+    fetch(
+      `https://ajmovies-fc7e7627ec3d.herokuapp.com/users/${user.Username}/movies/${movie_id}`,
+      {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          alert("Failed to add");
+        }
+      })
+      .then((user) => {
+        if (user) {
+          localStorage.setItem("user", JSON.stringify(user));
+          setUser(user);
+          //setIsFavorite(true);
+        }
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+      });
+  };
+
+  // remove favorite movie
+  const removeFav = (movie_id) => {
+    fetch(
+      `https://ajmovies-fc7e7627ec3d.herokuapp.com/users/${user.Username}/movies/${movie_id}`,
+      {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          alert("Failed to remove");
+        }
+      })
+      .then((user) => {
+        if (user) {
+          localStorage.setItem("user", JSON.stringify(user));
+          setUser(user);
+        }
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+      });
+  };
   // connect app to api with hook
   useEffect(() => {
     if (!token) {

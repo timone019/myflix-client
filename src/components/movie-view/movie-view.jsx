@@ -6,11 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 
-export const MovieView = ({ token }) => {
+export const MovieView = ({ token, addFav, removeFav }) => {
   const { title } = useParams();
   const [movie, setMovie] = useState(null);
   const [similarMovies, setSimilarMovies] = useState([]);
-  const [addFavoriteMovie, removeFavoriteMovie] = useState();
 
   useEffect(() => {
     // Fetch the movie from your API using the title
@@ -51,15 +50,14 @@ export const MovieView = ({ token }) => {
           alt={movie.Title}
           style={{ width: "500px" }}
         />
+        s
       </div>
       <br />
       <div>
-        {addFavoriteMovie ? (
-          <Button onClick={() => addFavoriteMovie(movie_id)} />
+        {addFav ? (
+          <Button onClick={() => addFav(movie_id)} />
         ) : (
-          removeFavoriteMovie && (
-            <Button onClick={() => removeFavoriteMovie(movie_id)} />
-          )
+          removeFav && <Button onClick={() => removeFav(movie_id)} />
         )}
       </div>
 
