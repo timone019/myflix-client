@@ -3,9 +3,7 @@ import { Container, Col, Row, Card, Form, Button } from "react-bootstrap";
 import UserInfo from "./user-info";
 import { MovieCard } from "../movie-card/movie-card";
 import UpdateUser from "./update-user";
-import { Link } from "react-router-dom";
 import "./profile-view.scss";
-import FavoriteMovies from "./favorite-movies";
 
 export function ProfileView({ movies, user, setUser }) {
   // Rename functions for consistency
@@ -30,7 +28,6 @@ export function ProfileView({ movies, user, setUser }) {
             </Card.Body>
           </Card>
         </Col>
-
         <Col xs={12} sm={8}>
           <Card>
             <Card.Body>
@@ -38,7 +35,6 @@ export function ProfileView({ movies, user, setUser }) {
             </Card.Body>
           </Card>
         </Col>
-
         {movies
           .filter((movie) => user.FavoriteMovies.includes(movie._id))
           .map((movie) => (

@@ -47,5 +47,3 @@ MovieCard.propTypes = {
     }),
   }),
 };
-
-export default MovieCard;
