@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Card, Container, Row, Col } from "react-bootstrap";
+import { Card, Container, Row, Col, Button } from "react-bootstrap";
 import { MovieCard } from "../movie-card/movie-card";
 import UserInfo from "./user-info";
 import UpdateUser from "./update-user";
@@ -47,6 +47,7 @@ export function ProfileView({
             </Card.Body>
           </Card>
         </Col>
+        <></>
         <h4>Favorite Movies</h4>
         {movies
           .filter((movie) => favoriteMovies.includes(movie._id))

@@ -128,7 +128,7 @@ export const MainView = () => {
               element={
                 <>
                   {user ? (
-                    <Navigate to="/" />
+                    <Navigate to="/login" />
                   ) : (
                     <Col md={5}>
                       <SignupView

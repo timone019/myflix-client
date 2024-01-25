@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 import {
   Form,
   Button,
@@ -19,7 +19,7 @@ export const SignupView = () => {
   const [birthday, setBirthday] = useState("");
   // const [loading, setLoading] = useState(false);
   // const [error, setError] = useState(null);
-
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     // setLoading(true);
@@ -48,7 +48,7 @@ export const SignupView = () => {
       })
       .then((data) => {
         alert("Signup successful");
-        window.location.reload();
+        navigate("/login"); // navigate to login page
       })
       .catch((error) => {
         console.error(

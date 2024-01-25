@@ -6,7 +6,10 @@
     border: none;
     border-radius: 4px;
 }
-
+/* In your CSS file */
+.delete-button {
+  width: 150px;  /* Adjust as needed */
+}
 
 @import "~bootstrap/scss/bootstrap";
 

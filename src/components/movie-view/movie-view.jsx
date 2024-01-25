@@ -40,10 +40,9 @@ export const MovieView = ({ user, addFav, removeFav, favMovies, movies }) => {
         <div style={{ textAlign: "center" }}>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <img
-              className="w-100"
+              className="movie-image"
               src={movie.ImagePath}
               alt={movie.Title}
-              style={{ width: "600px" }}
             />
           </div>
           <div>
@@ -99,14 +98,24 @@ export const MovieView = ({ user, addFav, removeFav, favMovies, movies }) => {
           </p>
 
           <div style={{ textAlign: "center" }}>
-            <div>
+            <div style={{ textAlign: "left" }}>
               <h2>Similar Movies</h2>
-              {similarMovies.map((similarMovie) => (
-                <div key={similarMovie._id}>
-                  <h3>{similarMovie.Title}</h3>
-                  <img src={similarMovie.ImagePath} alt={similarMovie.Title} />
-                </div>
-              ))}
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "space-around",
+                }}>
+                {similarMovies.map((similarMovie) => (
+                  <div key={similarMovie._id} style={{ margin: "10px" }}>
+                    <h3>{similarMovie.Title}</h3>
+                    <img
+                      src={similarMovie.ImagePath}
+                      alt={similarMovie.Title}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           <br />

@@ -17,8 +17,6 @@ const UpdateUser = ({ user, setUser }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add any validation or error handling as needed
-
     // Make API request to update user
     const token = localStorage.getItem("token");
     try {
@@ -46,7 +44,25 @@ const UpdateUser = ({ user, setUser }) => {
       console.error("Error updating user:", error.message);
     }
   };
-
+  const handleDelete = () => {
+    const token = localStorage.getItem("token");
+    fetch(
+      `https://ajmovies-fc7e7627ec3d.herokuapp.com/users/${user.Username}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    ).then((response) => {
+      if (response.ok) {
+        setUser(null);
+        alert("Your account has been deleted");
+      } else {
+        alert("something went wrong.");
+      }
+    });
+  };
   return (
     <>
       <h4>Update User</h4>
@@ -98,9 +114,18 @@ const UpdateUser = ({ user, setUser }) => {
         </Form.Group>
 
         {/* Add more Form.Group elements for additional fields */}
-        <Button variant="primary" type="submit" onClick={handleSubmit}>
+        <Button
+          className="mt-3"
+          variant="primary"
+          type="submit"
+          onClick={handleSubmit}>
           Save Changes
         </Button>
+        <div>
+          <Button className="mt-3" variant="primary" onClick={handleDelete}>
+            Delete Account
+          </Button>
+        </div>
       </Form>
     </>
   );

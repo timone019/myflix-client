@@ -13237,6 +13237,13 @@ textarea.form-control-lg {
   padding: 4px 12px;
 }
 
+.movie-image {
+  object-fit: cover;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
+
 :root, [data-bs-theme="light"] {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
