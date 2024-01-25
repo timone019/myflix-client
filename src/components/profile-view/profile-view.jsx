@@ -1,22 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { Container, Col, Row, Card, Form, Button } from "react-bootstrap";
-import UserInfo from "./user-info";
+import { useState, useEffect } from "react";
+import { Card, Container, Row, Col } from "react-bootstrap";
 import { MovieCard } from "../movie-card/movie-card";
+import UserInfo from "./user-info";
 import UpdateUser from "./update-user";
-import "./profile-view.scss";
 
-export function ProfileView({ movies, user, setUser }) {
-  // Rename functions for consistency
-  // const removeFavorite = (movieId) => {
-  //   const updatedList = user.FavoriteMovies.filter((id) => id !== movieId);
-  //   setUser((prevUser) => ({ ...prevUser, FavoriteMovies: updatedList }));
-  //   console.log(updatedList);
-  // };
+export function ProfileView({
+  movies,
+  user,
+  setUser,
+  addFav,
+  removeFav,
+  favMovies,
+}) {
   console.log(user);
-  // const handleUpdate = (event) => {
-  //   const { name, value } = event.target;
-  //   setUser((prevUser) => ({ ...prevUser, [name]: value }));
-  // };
+
+  const [favoriteMovies, setFavoriteMovies] = useState(favMovies);
+
+  useEffect(() => {
+    setFavoriteMovies(favMovies);
+  }, [favMovies]);
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <Container>
@@ -24,7 +30,13 @@ export function ProfileView({ movies, user, setUser }) {
         <Col xs={12} sm={4}>
           <Card>
             <Card.Body>
-              <UserInfo name={user.Username} email={user.Email} />
+              {user && (
+                <UserInfo
+                  username={user.Username}
+                  email={user.Email}
+                  birthday={user.Birthday}
+                />
+              )}
             </Card.Body>
           </Card>
         </Col>
@@ -35,16 +47,20 @@ export function ProfileView({ movies, user, setUser }) {
             </Card.Body>
           </Card>
         </Col>
+        <h4>Favorite Movies</h4>
         {movies
-          .filter((movie) => user.FavoriteMovies.includes(movie._id))
+          .filter((movie) => favoriteMovies.includes(movie._id))
           .map((movie) => (
-            <Col className="mb-5" key={movie._id} md={3}>
-              <MovieCard movie={movie} />
+            <Col className="mb-4" key={movie._id} md={3}>
+              <MovieCard
+                movie={movie}
+                addFav={addFav}
+                removeFav={removeFav}
+                isFav={favoriteMovies.includes(movie._id)}
+              />
             </Col>
           ))}
       </Row>
     </Container>
   );
 }
-
-export default ProfileView;

@@ -2,115 +2,109 @@ import React, { useState, useEffect } from "react";
 import "./movie-view.scss";
 import PropTypes from "prop-types";
 import { useParams, Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
-import { Button } from "react-bootstrap";
+import { Heart, HeartFill } from "react-bootstrap-icons";
+import { Container, Col, Row, Card } from "react-bootstrap";
+import { MovieCard } from "../movie-card/movie-card";
 
-export const MovieView = ({ token, addFav, removeFav }) => {
+export const MovieView = ({ user, addFav, removeFav, favMovies, movies }) => {
   const { title } = useParams();
   const [movie, setMovie] = useState(null);
   const [similarMovies, setSimilarMovies] = useState([]);
+  const [isFav, setIsFav] = useState(false);
 
   useEffect(() => {
-    // Fetch the movie from your API using the title
-    fetch(`https://ajmovies-fc7e7627ec3d.herokuapp.com/movies/${title}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("response", data);
-        setMovie(data);
+    const movie = movies.find((m) => m.Title === title);
+    setMovie(movie);
 
-        // Fetch similar movies
-        fetch(`https://ajmovies-fc7e7627ec3d.herokuapp.com/movies/`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-          .then((response) => response.json())
-          .then((allMovies) => {
-            const similarMovies = allMovies.filter(
-              (m) => m.Genre.Name === data?.Genre?.Name && m._id !== data._id
-            );
-            // console.log('similarMovies', similarMovies);
-            setSimilarMovies(similarMovies);
-          });
-      });
-  }, []);
+    if (movie) {
+      const similarMovies = movies.filter(
+        (m) => m.Genre.Name === movie.Genre.Name && m._id !== movie._id
+      );
+      setSimilarMovies(similarMovies);
+      setIsFav(user.FavoriteMovies.includes(movie._id));
+    }
+  }, [title, movies, user]);
 
-  if (!movie) return null;
+  const handleAddFav = (movieId) => {
+    addFav(movieId);
+    setIsFav(true);
+  };
+  const handleRemoveFav = (movieId) => {
+    removeFav(movieId);
+    setIsFav(false);
+  };
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <img
-          src={movie.ImagePath}
-          alt={movie.Title}
-          style={{ width: "500px" }}
-        />
-        s
-      </div>
-      <br />
-      <div>
-        {addFav ? (
-          <Button onClick={() => addFav(movie_id)} />
-        ) : (
-          removeFav && <Button onClick={() => removeFav(movie_id)} />
-        )}
-      </div>
+    <>
+      {movie && (
+        <div style={{ textAlign: "center" }}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <img
+              className="w-100"
+              src={movie.ImagePath}
+              alt={movie.Title}
+              style={{ width: "600px" }}
+            />
+          </div>
+          <div>
+            {isFav ? (
+              <HeartFill
+                color="red"
+                size={20}
+                className="fav-button mt-2 me-2 top-0 end-0"
+                onClick={() => handleRemoveFav(movie._id)}
+              />
+            ) : (
+              <Heart
+                color="red"
+                size={20}
+                className="fav-button mt-2 me-2 top-0 end-0"
+                onClick={() => handleAddFav(movie._id)}
+              />
+            )}
+          </div>
+          <br />
+          <div className="movie-view">
+            <h1>{movie.Title}</h1>
+            {/* Other movie view content */}
+          </div>
+          <div>
+            <span>Director: </span>
+            <span>{movie.Director.Name}</span>
+          </div>
+          <div>
+            <span>Genre: </span>
+            <span>{movie.Genre.Name}</span>
+          </div>
+          <br />
+          <p style={{ maxWidth: "800px", margin: "0 auto" }}>
+            <span>{movie.Description}</span>
+          </p>
 
-      <div>
-        <span>
-          <h1> {movie.Title}</h1>
-        </span>
-      </div>
-      <div>
-        <span>Director: </span>
-        <span>{movie.Director.Name}</span>
-      </div>
-      <div>
-        <span>Genre: </span>
-        <span>{movie.Genre.Name}</span>
-      </div>
-      <br />
-      <p style={{ maxWidth: "800px", margin: "0 auto" }}>
-        <span>{movie.Description}</span>
-      </p>
-
-      <div style={{ textAlign: "center" }}>
-        <div>
-          <h2>Similar Movies</h2>
-          {similarMovies.map((similarMovie) => (
-            <div key={similarMovie._id}>
-              <h3>{similarMovie.Title}</h3>
-              <img src={similarMovie.ImagePath} alt={similarMovie.Title} />
+          <div style={{ textAlign: "center" }}>
+            <div>
+              <h2>Similar Movies</h2>
+              {similarMovies.map((similarMovie) => (
+                <div key={similarMovie._id}>
+                  <h3>{similarMovie.Title}</h3>
+                  <img src={similarMovie.ImagePath} alt={similarMovie.Title} />
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
+          <br />
+          <Link to="/" className="back-button" style={{ cursor: "pointer" }}>
+            Back
+          </Link>
         </div>
-      </div>
-      <br />
-      <Link to="/" className="back-button" style={{ cursor: "pointer" }}>
-        Back
-      </Link>
-    </div>
+      )}
+    </>
   );
 };
+
 MovieView.propTypes = {
+  addFav: PropTypes.func.isRequired,
+  removeFav: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
-  MovieView: PropTypes.shape({
-    _id: PropTypes.string,
-    Title: PropTypes.string,
-    Description: PropTypes.string,
-    Year: PropTypes.number,
-    Genre: PropTypes.shape({
-      Name: PropTypes.string,
-    }),
-    Director: PropTypes.shape({
-      Name: PropTypes.string,
-      Bio: PropTypes.string,
-      Birth: PropTypes.string,
-    }),
-  }),
+  movies: PropTypes.array.isRequired,
 };
