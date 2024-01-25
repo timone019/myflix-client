@@ -69,6 +69,23 @@ export const MovieView = ({ user, addFav, removeFav, favMovies, movies }) => {
             {/* Other movie view content */}
           </div>
           <div>
+            <span>Year: </span>
+            <span>
+              <h1>{movie.Year}</h1>
+            </span>
+          </div>
+          <div>
+            <span>
+              <a
+                href={movie.TrailerPath}
+                target="_blank"
+                rel="noopene noreferrer"
+                className="Trailer-button">
+                Watch Trailer
+              </a>
+            </span>
+          </div>
+          <div>
             <span>Director: </span>
             <span>{movie.Director.Name}</span>
           </div>

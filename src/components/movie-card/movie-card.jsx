@@ -28,7 +28,7 @@ export const MovieCard = ({ movie, isFav, addFav, removeFav }) => {
           )}
         </div>
         <Card.Title>{movie.Title}</Card.Title>
-        {/* <Card.Title>{movie.Year}</Card.Title> */}
+        <Card.Title>{movie.Year}</Card.Title>
       </Card.Body>
 
       <Card.Footer>
@@ -44,7 +44,7 @@ MovieCard.propTypes = {
   movie: PropTypes.shape({
     _id: PropTypes.string,
     Title: PropTypes.string,
-    // Year: PropTypes.number,
+    Year: PropTypes.number,
   }).isRequired,
   addFav: PropTypes.func.isRequired,
   removeFav: PropTypes.func.isRequired,

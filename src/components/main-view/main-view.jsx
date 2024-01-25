@@ -100,6 +100,9 @@ export const MainView = () => {
               Birth: movie.Director.Birth,
             },
             Featured: movie.Featured,
+            Actors: movie.Actors,
+            Year: movie.Year,
+            TrailerPath: movie.TrailerPath,
           };
         });
 
