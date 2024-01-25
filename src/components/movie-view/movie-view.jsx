@@ -13,15 +13,16 @@ export const MovieView = ({ user, addFav, removeFav, favMovies, movies }) => {
   const [isFav, setIsFav] = useState(false);
 
   useEffect(() => {
-    const movie = movies.find((m) => m.Title === title);
-    setMovie(movie);
+    const foundMovie = movies.find((m) => m.Title === title);
+    setMovie(foundMovie);
 
-    if (movie) {
-      const similarMovies = movies.filter(
-        (m) => m.Genre.Name === movie.Genre.Name && m._id !== movie._id
+    if (foundMovie) {
+      const similarMoviesList = movies.filter(
+        (m) =>
+          m.Genre.Name === foundMovie.Genre.Name && m._id !== foundMovie._id
       );
-      setSimilarMovies(similarMovies);
-      setIsFav(user.FavoriteMovies.includes(movie._id));
+      setSimilarMovies(similarMoviesList);
+      setIsFav(user.FavoriteMovies.includes(foundMovie._id));
     }
   }, [title, movies, user]);
 
@@ -29,6 +30,7 @@ export const MovieView = ({ user, addFav, removeFav, favMovies, movies }) => {
     addFav(movieId);
     setIsFav(true);
   };
+
   const handleRemoveFav = (movieId) => {
     removeFav(movieId);
     setIsFav(false);
@@ -78,7 +80,7 @@ export const MovieView = ({ user, addFav, removeFav, favMovies, movies }) => {
               <a
                 href={movie.TrailerPath}
                 target="_blank"
-                rel="noopene noreferrer"
+                rel="noopener noreferrer"
                 className="Trailer-button">
                 Watch Trailer
               </a>
@@ -119,9 +121,11 @@ export const MovieView = ({ user, addFav, removeFav, favMovies, movies }) => {
             </div>
           </div>
           <br />
-          <Link to="/" className="back-button" style={{ cursor: "pointer" }}>
-            Back
-          </Link>
+          <div style={{ textAlign: "center", marginBottom: "20px" }}>
+            <Link to="/" className="back-button" style={{ cursor: "pointer" }}>
+              Back
+            </Link>
+          </div>
         </div>
       )}
     </>
@@ -129,8 +133,9 @@ export const MovieView = ({ user, addFav, removeFav, favMovies, movies }) => {
 };
 
 MovieView.propTypes = {
+  user: PropTypes.object.isRequired,
   addFav: PropTypes.func.isRequired,
   removeFav: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired,
+  favMovies: PropTypes.array.isRequired,
   movies: PropTypes.array.isRequired,
 };
