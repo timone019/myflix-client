@@ -61,6 +61,11 @@ export function ProfileView({
               />
             </Col>
           ))}
+        {/* // ) : (
+          // <div className="mb-4 primary" style={{ color: "white" }}>
+          //   No Favorite Movies Added
+          // </div>
+        // )} */}
       </Row>
     </Container>
   );

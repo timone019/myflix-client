@@ -34,9 +34,10 @@ const UpdateUser = ({ user, setUser }) => {
 
       if (response.ok) {
         const updatedUserData = await response.json();
-        // Update user state in parent component or trigger a callback
         setUser(updatedUserData);
+        setUpdateMessage("User updated successfully");
         console.log("User updated successfully:", updatedUserData);
+        window.alert("User updated successfully"); // Add this line
       } else {
         console.error("Error updating user:", response.statusText);
       }
@@ -45,6 +46,13 @@ const UpdateUser = ({ user, setUser }) => {
     }
   };
   const handleDelete = () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete your account?"
+    );
+    if (!confirmDelete) {
+      return;
+    }
+
     const token = localStorage.getItem("token");
     fetch(
       `https://ajmovies-fc7e7627ec3d.herokuapp.com/users/${user.Username}`,
@@ -63,6 +71,8 @@ const UpdateUser = ({ user, setUser }) => {
       }
     });
   };
+
+  const [updateMessage, setUpdateMessage] = useState("");
   return (
     <>
       <h4>Update User</h4>

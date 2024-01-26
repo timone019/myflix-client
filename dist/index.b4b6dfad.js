@@ -55237,6 +55237,12 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 function UserInfo({ email, username, birthday }) {
+    const formattedBirthday = new Date(birthday);
+    const month = formattedBirthday.toLocaleString("default", {
+        month: "long"
+    });
+    const day = formattedBirthday.getDate();
+    const year = formattedBirthday.getFullYear();
     // Add logic to fetch user info or receive props
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
@@ -55244,7 +55250,7 @@ function UserInfo({ email, username, birthday }) {
                 children: "User Info"
             }, void 0, false, {
                 fileName: "src/components/profile-view/user-info.jsx",
-                lineNumber: 7,
+                lineNumber: 11,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -55254,7 +55260,7 @@ function UserInfo({ email, username, birthday }) {
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/user-info.jsx",
-                lineNumber: 8,
+                lineNumber: 12,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -55264,17 +55270,17 @@ function UserInfo({ email, username, birthday }) {
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/user-info.jsx",
-                lineNumber: 9,
+                lineNumber: 13,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
                 children: [
                     "Birthday: ",
-                    birthday
+                    `${month} ${day}, ${year}`
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/user-info.jsx",
-                lineNumber: 10,
+                lineNumber: 14,
                 columnNumber: 7
             }, this)
         ]
@@ -55336,15 +55342,18 @@ const UpdateUser = ({ user, setUser })=>{
             });
             if (response.ok) {
                 const updatedUserData = await response.json();
-                // Update user state in parent component or trigger a callback
                 setUser(updatedUserData);
+                setUpdateMessage("User updated successfully");
                 console.log("User updated successfully:", updatedUserData);
+                window.alert("User updated successfully"); // Add this line
             } else console.error("Error updating user:", response.statusText);
         } catch (error) {
             console.error("Error updating user:", error.message);
         }
     };
     const handleDelete = ()=>{
+        const confirmDelete = window.confirm("Are you sure you want to delete your account?");
+        if (!confirmDelete) return;
         const token = localStorage.getItem("token");
         fetch(`https://ajmovies-fc7e7627ec3d.herokuapp.com/users/${user.Username}`, {
             method: "DELETE",
@@ -55358,13 +55367,14 @@ const UpdateUser = ({ user, setUser })=>{
             } else alert("something went wrong.");
         });
     };
+    const [updateMessage, setUpdateMessage] = (0, _react.useState)("");
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h4", {
                 children: "Update User"
             }, void 0, false, {
                 fileName: "src/components/profile-view/update-user.jsx",
-                lineNumber: 68,
+                lineNumber: 78,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default), {
@@ -55376,7 +55386,7 @@ const UpdateUser = ({ user, setUser })=>{
                                 children: "Username:"
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/update-user.jsx",
-                                lineNumber: 71,
+                                lineNumber: 81,
                                 columnNumber: 11
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -55388,13 +55398,13 @@ const UpdateUser = ({ user, setUser })=>{
                                 placeholder: "Enter a username"
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/update-user.jsx",
-                                lineNumber: 72,
+                                lineNumber: 82,
                                 columnNumber: 11
                             }, undefined)
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/update-user.jsx",
-                        lineNumber: 70,
+                        lineNumber: 80,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -55404,7 +55414,7 @@ const UpdateUser = ({ user, setUser })=>{
                                 children: "Password:"
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/update-user.jsx",
-                                lineNumber: 82,
+                                lineNumber: 92,
                                 columnNumber: 11
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -55417,13 +55427,13 @@ const UpdateUser = ({ user, setUser })=>{
                                 placeholder: "Password must be 8 or more characters"
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/update-user.jsx",
-                                lineNumber: 83,
+                                lineNumber: 93,
                                 columnNumber: 11
                             }, undefined)
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/update-user.jsx",
-                        lineNumber: 81,
+                        lineNumber: 91,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -55432,7 +55442,7 @@ const UpdateUser = ({ user, setUser })=>{
                                 children: "Email Address:"
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/update-user.jsx",
-                                lineNumber: 94,
+                                lineNumber: 104,
                                 columnNumber: 11
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -55444,13 +55454,13 @@ const UpdateUser = ({ user, setUser })=>{
                                 placeholder: "Enter an email address"
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/update-user.jsx",
-                                lineNumber: 95,
+                                lineNumber: 105,
                                 columnNumber: 11
                             }, undefined)
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/update-user.jsx",
-                        lineNumber: 93,
+                        lineNumber: 103,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -55459,7 +55469,7 @@ const UpdateUser = ({ user, setUser })=>{
                                 children: "Birthday:"
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/update-user.jsx",
-                                lineNumber: 105,
+                                lineNumber: 115,
                                 columnNumber: 11
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -55471,13 +55481,13 @@ const UpdateUser = ({ user, setUser })=>{
                                 placeholder: "Birthday"
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/update-user.jsx",
-                                lineNumber: 106,
+                                lineNumber: 116,
                                 columnNumber: 11
                             }, undefined)
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/update-user.jsx",
-                        lineNumber: 104,
+                        lineNumber: 114,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
@@ -55488,7 +55498,7 @@ const UpdateUser = ({ user, setUser })=>{
                         children: "Save Changes"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/update-user.jsx",
-                        lineNumber: 117,
+                        lineNumber: 127,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -55499,24 +55509,24 @@ const UpdateUser = ({ user, setUser })=>{
                             children: "Delete Account"
                         }, void 0, false, {
                             fileName: "src/components/profile-view/update-user.jsx",
-                            lineNumber: 125,
+                            lineNumber: 135,
                             columnNumber: 11
                         }, undefined)
                     }, void 0, false, {
                         fileName: "src/components/profile-view/update-user.jsx",
-                        lineNumber: 124,
+                        lineNumber: 134,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/update-user.jsx",
-                lineNumber: 69,
+                lineNumber: 79,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true);
 };
-_s(UpdateUser, "drgZB6SmjeS1pBO2cE3cKUMHbMQ=");
+_s(UpdateUser, "csA7G7nzllG54Yxfm0BJfFAy9Ao=");
 _c = UpdateUser;
 exports.default = UpdateUser;
 var _c;
