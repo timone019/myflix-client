@@ -27635,7 +27635,8 @@ MovieCard.propTypes = {
     }).isRequired,
     addFav: (0, _propTypesDefault.default).func.isRequired,
     removeFav: (0, _propTypesDefault.default).func.isRequired,
-    isFav: (0, _propTypesDefault.default).bool.isRequired
+    isFav: (0, _propTypesDefault.default).bool.isRequired,
+    favMovies: (0, _propTypesDefault.default).arrayOf((0, _propTypesDefault.default).string).isRequired
 };
 var _c;
 $RefreshReg$(_c, "MovieCard");

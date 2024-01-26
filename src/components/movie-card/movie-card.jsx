@@ -49,4 +49,5 @@ MovieCard.propTypes = {
   addFav: PropTypes.func.isRequired,
   removeFav: PropTypes.func.isRequired,
   isFav: PropTypes.bool.isRequired,
+  favMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
