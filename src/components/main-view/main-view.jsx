@@ -18,6 +18,8 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const { title } = useParams();
   const [favMovies, setFavMovies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const addFav = (movieId) => {
     setFavMovies((prevFavMovies) => [...prevFavMovies, movieId]); // Add the movieId to the array ([...favMovies, movieId]);
 
@@ -122,6 +124,19 @@ export const MainView = () => {
         />
 
         <Row className="justify-content-md-center">
+          <Container className="mb-3 mt-3">
+            <Row>
+              <Col md={6} className="mx-auto">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="form-control"
+                />
+              </Col>
+            </Row>
+          </Container>
           <Routes>
             <Route
               path="/signup"
@@ -173,16 +188,22 @@ export const MainView = () => {
                     <Col> The list is empty!</Col>
                   ) : (
                     <>
-                      {movies.map((movie) => (
-                        <Col className="mb-4" key={movie._id} md={3}>
-                          <MovieCard
-                            movie={movie}
-                            isFav={favMovies.includes(movie._id)}
-                            addFav={addFav}
-                            removeFav={removeFav}
-                          />
-                        </Col>
-                      ))}
+                      {movies
+                        .filter((movie) =>
+                          movie.Title.toLowerCase().includes(
+                            searchTerm.toLowerCase()
+                          )
+                        )
+                        .map((movie) => (
+                          <Col className="mb-4" key={movie._id} md={3}>
+                            <MovieCard
+                              movie={movie}
+                              isFav={favMovies.includes(movie._id)}
+                              addFav={addFav}
+                              removeFav={removeFav}
+                            />
+                          </Col>
+                        ))}
                     </>
                   )}
                 </>
