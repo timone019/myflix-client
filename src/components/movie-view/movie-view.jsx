@@ -101,31 +101,26 @@ export const MovieView = ({ user, addFav, removeFav, favMovies, movies }) => {
           </p>
 
           <div style={{ textAlign: "center" }}>
-            <div style={{ textAlign: "left" }}>
-              <h2>Similar Movies</h2>
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  justifyContent: "space-around",
-                }}>
-                {similarMovies.map((similarMovie) => (
-                  <div key={similarMovie._id} style={{ margin: "10px" }}>
-                    <h3>{similarMovie.Title}</h3>
-                    <img
-                      src={similarMovie.ImagePath}
-                      alt={similarMovie.Title}
-                    />
-                  </div>
-                ))}
-              </div>
+            <div style={{ textAlign: "auto" }}>
+              <h2>Similar movies</h2>
+              <Container className="mb-3">
+                <Row>
+                  {similarMovies.map((movie) => (
+                    <Col
+                      md={3}
+                      key={`${movie._id}-${isFav}`}
+                      className="movie-card">
+                      <MovieCard
+                        movie={movie}
+                        addFav={addFav}
+                        removeFav={removeFav}
+                        isFav={favMovies.includes(movie._id)}
+                      />
+                    </Col>
+                  ))}
+                </Row>
+              </Container>
             </div>
-          </div>
-          <br />
-          <div style={{ textAlign: "center", marginBottom: "20px" }}>
-            <Link to="/" className="back-button" style={{ cursor: "pointer" }}>
-              Back
-            </Link>
           </div>
         </div>
       )}
