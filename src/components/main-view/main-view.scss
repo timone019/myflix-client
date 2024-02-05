@@ -1,10 +1,13 @@
 .logout-button {
   padding: 4px 12px 4px 12px;
   color: whitesmoke;
-    background-color: dodgerblue;
+    background-color: rgb(255, 30, 30);
     border: none;
     border-radius: 4px;
 }
 
-@import "~bootstrap/scss/bootstrap";
+.form-control {
+  background-color: white
+}
 
+@import "~bootstrap/scss/bootstrap";

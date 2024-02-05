@@ -77,13 +77,14 @@ export const MovieView = ({ user, addFav, removeFav, favMovies, movies }) => {
           </div>
           <div>
             <span>
-              <a
-                href={movie.TrailerPath}
-                target="_blank"
-                rel="noopener noreferrer"
+              <iframe
+                src={movie.TrailerPath.replace("watch?v=", "embed/")}
+                title="Movie trailer"
+                aria-label="trailer"
+                allowFullScreen
                 className="Trailer-button">
                 Watch Trailer
-              </a>
+              </iframe>
             </span>
           </div>
           <div>
