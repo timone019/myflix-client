@@ -41666,7 +41666,7 @@ exports.default = Object.assign(ToggleButtonGroup, {
 
 },{"react":"21dqq","invariant":"d1QgR","uncontrollable":"b3yWY","./createChainedFunction":"1KNLM","./ElementChildren":"fdyAp","./ButtonGroup":"gXYCe","./ToggleButton":"dCmeV","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9xmpe":[function(require,module,exports) {
 /**
- * React Router DOM v6.21.3
+ * React Router DOM v6.22.0
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -41965,6 +41965,21 @@ const _excluded = [
     "preventScrollReset",
     "unstable_viewTransition"
 ];
+// HEY YOU! DON'T TOUCH THIS VARIABLE!
+//
+// It is replaced with the proper version at build time via a babel plugin in
+// the rollup config.
+//
+// Export a global property onto the window for React Router detection by the
+// Core Web Vitals Technology Report.  This way they can configure the `wappalyzer`
+// to detect and properly classify live websites as being built with React Router:
+// https://github.com/HTTPArchive/wappalyzer/blob/main/src/technologies/r.json
+const REACT_ROUTER_VERSION = "6";
+try {
+    window.__reactRouterVersion = REACT_ROUTER_VERSION;
+} catch (e) {
+// no-op
+}
 function createBrowserRouter(routes, opts) {
     return (0, _router.createRouter)({
         basename: opts == null ? void 0 : opts.basename,
@@ -43075,7 +43090,7 @@ let savedScrollPositions = {};
 
 },{"react":"21dqq","react-dom":"j6uA9","react-router":"dbWyW","@remix-run/router":"5ncDG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dbWyW":[function(require,module,exports) {
 /**
- * React Router v6.21.3
+ * React Router v6.22.0
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -44322,7 +44337,7 @@ function createMemoryRouter(routes, opts) {
 
 },{"react":"21dqq","@remix-run/router":"5ncDG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5ncDG":[function(require,module,exports) {
 /**
- * @remix-run/router v1.14.2
+ * @remix-run/router v1.15.0
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -46870,7 +46885,8 @@ function createStaticHandler(routes, opts) {
     } else mapRouteProperties = defaultMapRouteProperties;
     // Config driven behavior flags
     let future = _extends({
-        v7_relativeSplatPath: false
+        v7_relativeSplatPath: false,
+        v7_throwAbortReason: false
     }, opts ? opts.future : null);
     let dataRoutes = convertRoutesToDataRoutes(routes, mapRouteProperties, undefined, manifest);
     /**
@@ -47051,10 +47067,7 @@ function createStaticHandler(routes, opts) {
                 isRouteRequest,
                 requestContext
             });
-            if (request.signal.aborted) {
-                let method = isRouteRequest ? "queryRoute" : "query";
-                throw new Error(method + "() call aborted: " + request.method + " " + request.url);
-            }
+            if (request.signal.aborted) throwStaticHandlerAbortedError(request, isRouteRequest, future);
         }
         if (isRedirectResult(result)) // Uhhhh - this should never happen, we should always throw these from
         // callLoaderOrAction, but the type narrowing here keeps TS happy and we
@@ -47162,10 +47175,7 @@ function createStaticHandler(routes, opts) {
                     requestContext
                 }))
         ]);
-        if (request.signal.aborted) {
-            let method = isRouteRequest ? "queryRoute" : "query";
-            throw new Error(method + "() call aborted: " + request.method + " " + request.url);
-        }
+        if (request.signal.aborted) throwStaticHandlerAbortedError(request, isRouteRequest, future);
         // Process and commit output from loaders
         let activeDeferreds = new Map();
         let context = processRouteLoaderData(matches, matchesToLoad, results, pendingActionError, activeDeferreds);
@@ -47194,12 +47204,17 @@ function createStaticHandler(routes, opts) {
  * provide an updated StaticHandlerContext suitable for a second SSR render
  */ function getStaticContextFromError(routes, context, error) {
     let newContext = _extends({}, context, {
-        statusCode: 500,
+        statusCode: isRouteErrorResponse(error) ? error.status : 500,
         errors: {
             [context._deepestRenderedBoundaryId || routes[0].id]: error
         }
     });
     return newContext;
+}
+function throwStaticHandlerAbortedError(request, isRouteRequest, future) {
+    if (future.v7_throwAbortReason && request.signal.reason !== undefined) throw request.signal.reason;
+    let method = isRouteRequest ? "queryRoute" : "query";
+    throw new Error(method + "() call aborted: " + request.method + " " + request.url);
 }
 function isSubmissionNavigation(opts) {
     return opts != null && ("formData" in opts && opts.formData != null || "body" in opts && opts.body !== undefined);
