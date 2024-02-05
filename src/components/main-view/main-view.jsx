@@ -250,21 +250,6 @@ export const MainView = () => {
             />
           </Routes>
         </Row>
-
-        {user && (
-          <footer className="d-flex justify-content-center align-items-center">
-            <button
-              onClick={() => {
-                localStorage.clear();
-                setUser(null);
-                setToken(null);
-              }}
-              className="logout-button md-4 mb-3"
-              style={{ cursor: "pointer", width: "100px", height: "40px" }}>
-              Logout
-            </button>
-          </footer>
-        )}
       </Container>
     </BrowserRouter>
   );

@@ -1,9 +1,13 @@
 .logout-button {
   color: #f5f5f5;
-  background-color: #1e90ff;
+  background-color: #ff1e1e;
   border: none;
   border-radius: 4px;
   padding: 4px 12px;
+}
+
+.form-control {
+  background-color: #fff;
 }
 
 :root, [data-bs-theme="light"] {
@@ -13244,6 +13248,41 @@ textarea.form-control-lg {
   width: 100%;
   max-width: 400px;
   height: auto;
+}
+
+body.light {
+  color: #2f59ff;
+  background-color: #b6b6b6;
+}
+
+body.dark {
+  color: #fff;
+  background-color: #000;
+}
+
+.custom-navbar-brand:hover {
+  transition: color .5s;
+  color: gray !important;
+}
+
+.nav-link {
+  border-radius: 10px;
+}
+
+.nav-link:hover {
+  background-color: #d3d3d3;
+  transition: background-color .3s;
+}
+
+.custom-navbar:hover {
+  color: #d3d3d3 !important;
+  transition: color .5s !important;
+}
+
+.custom-navToggle:hover {
+  color: #d3d3d3 !important;
+  background-color: #d3d3d3 !important;
+  transition: background-color .5s !important;
 }
 
 :root, [data-bs-theme="light"] {
@@ -30682,7 +30721,7 @@ textarea.form-control-lg {
 .navbar {
   --bs-navbar-padding-x: 0;
   --bs-navbar-padding-y: .5rem;
-  --bs-navbar-color: #fff;
+  --bs-navbar-color: #3a0d0d;
   --bs-navbar-hover-color: #b20710;
   --bs-navbar-disabled-color: #fff;
   --bs-navbar-active-color: #b20710;
