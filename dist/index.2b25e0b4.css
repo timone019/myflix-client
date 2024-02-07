@@ -1,3 +1,7 @@
+body {
+  padding-top: 60px;
+}
+
 .logout-button {
   color: #f5f5f5;
   background-color: #ff1e1e;
@@ -13251,18 +13255,23 @@ textarea.form-control-lg {
 }
 
 body.light {
-  color: #2f59ff;
-  background-color: #b6b6b6;
+  color: #6e6e6e;
+  background-color: #d3d3d3;
 }
 
 body.dark {
-  color: #fff;
+  color: #818181;
   background-color: #000;
+}
+
+.navbar-light-mode-toggle-icon {
+  color: #757575;
+  background-color: #a1a1a1;
 }
 
 .custom-navbar-brand:hover {
   transition: color .5s;
-  color: gray !important;
+  color: #bbb !important;
 }
 
 .nav-link {
@@ -13270,7 +13279,7 @@ body.dark {
 }
 
 .nav-link:hover {
-  background-color: #d3d3d3;
+  background-color: #aaa8a8;
   transition: background-color .3s;
 }
 
@@ -13280,9 +13289,23 @@ body.dark {
 }
 
 .custom-navToggle:hover {
-  color: #d3d3d3 !important;
-  background-color: #d3d3d3 !important;
+  color: #7f7f7f !important;
+  background-color: #a3a3a3 !important;
   transition: background-color .5s !important;
+}
+
+.navbar {
+  background-color: #818181 !important;
+}
+
+.navbar-light-mode {
+  color: #000;
+  background-color: #9e9e9e;
+}
+
+.navbar-dark-mode {
+  color: #aeaeae;
+  background-color: #343a40;
 }
 
 :root, [data-bs-theme="light"] {
@@ -26704,18 +26727,18 @@ textarea.form-control-lg {
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
-  --bs-body-color: #fff;
-  --bs-body-color-rgb: 255, 255, 255;
+  --bs-body-color: #828282;
+  --bs-body-color-rgb: 130, 130, 130;
   --bs-body-bg: #000;
   --bs-body-bg-rgb: 0, 0, 0;
   --bs-emphasis-color: #000;
   --bs-emphasis-color-rgb: 0, 0, 0;
-  --bs-secondary-color: #ffffffbf;
-  --bs-secondary-color-rgb: 255, 255, 255;
+  --bs-secondary-color: #828282bf;
+  --bs-secondary-color-rgb: 130, 130, 130;
   --bs-secondary-bg: #e9ecef;
   --bs-secondary-bg-rgb: 233, 236, 239;
-  --bs-tertiary-color: #ffffff80;
-  --bs-tertiary-color-rgb: 255, 255, 255;
+  --bs-tertiary-color: #82828280;
+  --bs-tertiary-color-rgb: 130, 130, 130;
   --bs-tertiary-bg: #f8f9fa;
   --bs-tertiary-bg-rgb: 248, 249, 250;
   --bs-heading-color: inherit;
@@ -26725,7 +26748,7 @@ textarea.form-control-lg {
   --bs-link-hover-color: #b70710;
   --bs-link-hover-color-rgb: 183, 7, 16;
   --bs-code-color: #d63384;
-  --bs-highlight-color: #fff;
+  --bs-highlight-color: #828282;
   --bs-highlight-bg: #fff3cd;
   --bs-border-width: 1px;
   --bs-border-style: solid;
@@ -30723,8 +30746,8 @@ textarea.form-control-lg {
   --bs-navbar-padding-y: .5rem;
   --bs-navbar-color: #3a0d0d;
   --bs-navbar-hover-color: #b20710;
-  --bs-navbar-disabled-color: #fff;
-  --bs-navbar-active-color: #b20710;
+  --bs-navbar-disabled-color: #b5b5b5;
+  --bs-navbar-active-color: #a4a4a4;
   --bs-navbar-brand-padding-y: .3125rem;
   --bs-navbar-brand-margin-end: 1rem;
   --bs-navbar-brand-font-size: 1.25rem;
@@ -30734,8 +30757,8 @@ textarea.form-control-lg {
   --bs-navbar-toggler-padding-y: .25rem;
   --bs-navbar-toggler-padding-x: .75rem;
   --bs-navbar-toggler-font-size: 1.25rem;
-  --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-  --bs-navbar-toggler-border-color: #fff;
+  --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28130, 130, 130, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  --bs-navbar-toggler-border-color: #a5a5a5;
   --bs-navbar-toggler-border-radius: var(--bs-border-radius);
   --bs-navbar-toggler-focus-width: .25rem;
   --bs-navbar-toggler-transition: box-shadow .15s ease-in-out;
@@ -31408,7 +31431,7 @@ textarea.form-control-lg {
   --bs-accordion-btn-padding-y: 1rem;
   --bs-accordion-btn-color: var(--bs-body-color);
   --bs-accordion-btn-bg: var(--bs-accordion-bg);
-  --bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFFFFF'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  --bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23828282'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
   --bs-accordion-btn-icon-width: 1.25rem;
   --bs-accordion-btn-icon-transform: rotate(-180deg);
   --bs-accordion-btn-icon-transition: transform .2s ease-in-out;

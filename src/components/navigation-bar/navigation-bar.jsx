@@ -5,37 +5,39 @@ import "./navigation-bar.scss";
 
 export const NavigationBar = ({ user, onLoggedOut }) => {
   const [theme, setTheme] = useState("light");
+
   useEffect(() => {
     localStorage.setItem("theme", theme);
   }, [theme]);
+
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
+
   useEffect(() => {
     document.body.className = theme;
   }, [theme]);
 
-  const logoutAndNavigate = () => {
-    if (window.confirm("Are you sure you want to log out?")) {
-      try {
-        onLoggedOut();
-        gonavigate("/login");
-      } catch (error) {
-        console.error("Logout or navigation failed:", error);
-      }
-    }
-  };
-
   return (
     <Navbar
-      bg={theme}
+      bg={theme === "light" ? "light" : "dark"}
       variant={theme === "light" ? "light" : "dark"}
       expand="lg"
       fixed="top"
       onClick={() => window.scrollTo(0, 0)}>
       <Container>
         <Navbar.Brand>Movie App</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle
+          aria-controls="basic-navbar-nav"
+          bg={theme === "light" ? "light" : "dark"} // Set background color of toggle button
+          icon={
+            theme === "light" ? (
+              <CustomLightToggleIcon />
+            ) : (
+              <CustomDarkToggleIcon />
+            )
+          } // Custom icon based on theme
+        />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {!user && (
@@ -74,3 +76,13 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
     </Navbar>
   );
 };
+
+// Custom toggle icon for light mode
+const CustomLightToggleIcon = () => (
+  <span className="navbar-light-mode-toggle-icon">&#8801;</span>
+);
+
+// Custom toggle icon for dark mode
+const CustomDarkToggleIcon = () => (
+  <span className="navbar-dark-mode-toggle-icon">&#8801;</span>
+);
