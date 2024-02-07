@@ -122,21 +122,7 @@ export const MainView = () => {
             localStorage.clear();
           }}
         />
-
         <Row className="justify-content-md-center">
-          <Container className="mb-3 mt-3">
-            <Row>
-              <Col md={6} className="mx-auto">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="form-control"
-                />
-              </Col>
-            </Row>
-          </Container>
           <Routes>
             <Route
               path="/signup"
@@ -188,6 +174,22 @@ export const MainView = () => {
                     <Col> The list is empty!</Col>
                   ) : (
                     <>
+                      <Row className="justify-content-md-center">
+                        <Col className="mb-3 mt-3">
+                          <Row>
+                            <Col md={6} className="mx-auto">
+                              <input
+                                type="text"
+                                placeholder="Search..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="form-control"
+                              />
+                            </Col>
+                          </Row>
+                        </Col>
+                      </Row>
+
                       {movies
                         .filter((movie) =>
                           movie.Title.toLowerCase().includes(

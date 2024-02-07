@@ -1,37 +1,61 @@
+/* Light mode styles */
 body.light {
-    /* Light theme styles */
-    background-color: rgb(182, 182, 182);
-    color: rgb(47, 89, 255);
-  }
-  
-  body.dark {
-    /* Dark theme styles */
-    background-color: black;
-    color: white;
-  }
+  background-color: rgb(211, 211, 211);
+  color: rgb(110, 110, 110); /* Dark text in light mode */
+}
 
-  .custom-navbar-brand:hover {
-    color: gray !important;/* Change the color when hovered */
-    transition: color 0.5s ease; /* Smooth transition */
-  }
+/* Dark mode styles */
+body.dark {
+  background-color: black;
+  color: rgb(129, 129, 129); /* Light text in dark mode */
+}
 
-  .nav-link {
-    border-radius: 10px; /* Add rounded borders */
-  }
-  
-  .nav-link:hover {
-    background-color: lightgray; /* Change the background color */
-    transition: background-color 0.3s ease; /* Smooth transition */
-  }
+.navbar-light-mode-toggle-icon {
+  color: #757575; // Replace with the darker color you want in light mode
+}
+.navbar-light-mode-toggle-icon {
+  background-color: rgb(161, 161, 161); /* Set the hamburger icon color in dark mode */
+}
 
-  .custom-navbar:hover {
-    color: lightgray !important;/* Change the color when hovered */
-    transition: color 0.5s ease !important; /* Smooth transition */
-  }
+/* Other styles */
+.custom-navbar-brand:hover {
+  color: rgb(187, 187, 187) !important; /* Change the color when hovered */
+  transition: color 0.5s ease; /* Smooth transition */
+}
 
-  .custom-navToggle:hover {
-    color: lightgray !important;
-    background-color: lightgray !important; // Add this if you want to change the background color
-    transition: color 0.5s ease !important;
-    transition: background-color 0.5s ease !important; // Add this if you want to change the background color
-  }
+.nav-link {
+  border-radius: 10px; /* Add rounded borders */
+}
+
+.nav-link:hover {
+  background-color: rgb(170, 168, 168); /* Change the background color */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.custom-navbar:hover {
+  color: lightgray !important; /* Change the color when hovered */
+  transition: color 0.5s ease !important; /* Smooth transition */
+}
+
+.custom-navToggle:hover {
+  color: rgb(127, 127, 127) !important;
+  background-color: rgb(163, 163, 163) !important; /* Change the background color */
+  transition: color 0.5s ease !important;
+  transition: background-color 0.5s ease !important; /* Change the background color */
+}
+
+.navbar {
+  background-color: #818181 !important; /* Replace with the color you want */
+}
+
+.navbar-light-mode {
+  /* Light mode styles */
+  background-color: #9e9e9e; /* Light background color */
+  color: #000000; /* Black text color */
+}
+
+.navbar-dark-mode {
+  /* Dark mode styles */
+  background-color: #343a40; /* Dark background color */
+  color: #aeaeae; /* White text color */
+}
