@@ -16,6 +16,7 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
 
   useEffect(() => {
     document.body.className = theme;
+    document.documentElement.dataset.bsTheme = theme;
   }, [theme]);
 
   return (

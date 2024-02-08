@@ -1,11 +1,14 @@
 import React from "react";
 
 function UserInfo({ email, username, birthday }) {
-  const formattedBirthday = new Date(birthday);
-  const month = formattedBirthday.toLocaleString("default", { month: "long" });
-  const day = formattedBirthday.getDate();
-  const year = formattedBirthday.getFullYear();
-  // Add logic to fetch user info or receive props
+  const birthDate = new Date(birthday);
+  const utcBirthDate = new Date(
+    birthDate.getTime() + birthDate.getTimezoneOffset() * 60000
+  );
+  const month = utcBirthDate.toLocaleString("default", { month: "long" });
+  const day = utcBirthDate.getDate();
+  const year = utcBirthDate.getFullYear();
+
   return (
     <>
       <h4>User Info</h4>

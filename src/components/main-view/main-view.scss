@@ -1,3 +1,14 @@
+input[type="text"] {
+  background-color: white;
+}
+.search-bar {
+  background-color: white;
+}
+
+.search-bar:focus {
+  background-color: white;
+  outline: none;
+}
 body {
   padding-top: 60px; // Adjust this value based on the height of your navigation bar
 }
