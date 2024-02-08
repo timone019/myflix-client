@@ -22,6 +22,8 @@ export const MainView = () => {
 
   const addFav = (movieId) => {
     setFavMovies((prevFavMovies) => [...prevFavMovies, movieId]); // Add the movieId to the array ([...favMovies, movieId]);
+    // Save the updated favMovies array to localStorage
+    localStorage.setItem("favMovies", JSON.stringify([...favMovies, movieId]));
 
     fetch(
       `https://ajmovies-fc7e7627ec3d.herokuapp.com/users/${user.Username}/movies/${movieId}`,
@@ -42,8 +44,12 @@ export const MainView = () => {
       });
   };
   const removeFav = (movieId) => {
-    // setFavMovies((prevFavMovies) => [(prevFavMovies) => id !== movieId]);
-    // ); // Remove the movieId from the array (favMovies.filter((id) => id !== movieId))
+    // Remove the movieId from the array (favMovies.filter((id) => id !== movieId))
+    const updatedFavMovies = favMovies.filter((id) => id !== movieId);
+    setFavMovies(updatedFavMovies);
+
+    // Save the updated favMovies array to localStorage
+    localStorage.setItem("favMovies", JSON.stringify(updatedFavMovies));
 
     fetch(
       `https://ajmovies-fc7e7627ec3d.herokuapp.com/users/${user.Username}/movies/${movieId}`,
@@ -67,6 +73,11 @@ export const MainView = () => {
   useEffect(() => {
     if (!token) {
       return;
+    }
+    // Load hearted movies from local storage
+    const storedFavMovies = JSON.parse(localStorage.getItem("favMovies"));
+    if (storedFavMovies) {
+      setFavMovies(storedFavMovies);
     }
     // Fetch the user's favorite movies
     fetch(

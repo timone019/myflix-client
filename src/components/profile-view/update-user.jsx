@@ -17,6 +17,25 @@ const UpdateUser = ({ user, setUser }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Calculate age
+    const birthDate = new Date(updatedUser.Birthday);
+    if (isNaN(birthDate)) {
+      alert("Invalid date. Please enter the date in the format YYYY-MM-DD.");
+      return;
+    }
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    // Check age restriction
+    if (age < 13) {
+      alert("You must be at least 13 years old to update your profile.");
+      return;
+    }
     // Make API request to update user
     const token = localStorage.getItem("token");
     try {
