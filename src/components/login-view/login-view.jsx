@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Form,
   Button,
@@ -13,6 +13,31 @@ export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const userName = localStorage.getItem("userName");
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (!userName || !token) {
+      return;
+    }
+    // Fetch the user
+    fetch(`https://ajmovies-fc7e7627ec3d.herokuapp.com/users/${userName}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        onLoggedIn(data, token);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        localStorage.clear();
+        window.location.reload();
+      });
+  }, []);
+
+  if (userName && token) {
+    return;
+  }
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -32,7 +57,7 @@ export const LoginView = ({ onLoggedIn }) => {
       .then((data) => {
         console.log("Login response: ", data);
         if (data.user) {
-          localStorage.setItem("user", JSON.stringify(data.user));
+          localStorage.setItem("userName", data.user.Username);
           localStorage.setItem("token", data.token);
           onLoggedIn(data.user, data.token);
         } else {

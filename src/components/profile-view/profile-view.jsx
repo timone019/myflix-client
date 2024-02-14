@@ -4,26 +4,7 @@ import { MovieCard } from "../movie-card/movie-card";
 import UserInfo from "./user-info";
 import UpdateUser from "./update-user";
 
-export function ProfileView({
-  movies,
-  user,
-  setUser,
-  addFav,
-  removeFav,
-  favMovies,
-}) {
-  console.log(user);
-
-  const [favoriteMovies, setFavoriteMovies] = useState(favMovies);
-
-  useEffect(() => {
-    setFavoriteMovies(favMovies);
-  }, [favMovies]);
-
-  if (!user) {
-    return null;
-  }
-
+export function ProfileView({ movies, user, setUser, addFav, removeFav }) {
   return (
     <Container>
       <Row>
@@ -50,14 +31,14 @@ export function ProfileView({
         <></>
         <h4>Favorite Movies</h4>
         {movies
-          .filter((movie) => favoriteMovies.includes(movie._id))
+          .filter((movie) => user.FavoriteMovies.includes(movie._id))
           .map((movie) => (
             <Col className="mb-4" key={movie._id} md={3}>
               <MovieCard
                 movie={movie}
                 addFav={addFav}
                 removeFav={removeFav}
-                isFav={favoriteMovies.includes(movie._id)}
+                user={user}
               />
             </Col>
           ))}

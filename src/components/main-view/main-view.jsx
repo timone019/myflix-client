@@ -11,20 +11,13 @@ import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { Container, Col, Row } from "react-bootstrap";
 
 export const MainView = () => {
-  const storedUser = JSON.parse(localStorage.getItem("user"));
-  const storedToken = localStorage.getItem("token");
-  const [token, setToken] = useState(storedToken ? storedToken : null);
-  const [user, setUser] = useState(storedUser ? storedUser : null);
+  const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
   const [movies, setMovies] = useState([]);
-  const { title } = useParams();
-  const [favMovies, setFavMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [ready, setReady] = useState(false);
 
   const addFav = (movieId) => {
-    setFavMovies((prevFavMovies) => [...prevFavMovies, movieId]); // Add the movieId to the array ([...favMovies, movieId]);
-    // Save the updated favMovies array to localStorage
-    localStorage.setItem("favMovies", JSON.stringify([...favMovies, movieId]));
-
     fetch(
       `https://ajmovies-fc7e7627ec3d.herokuapp.com/users/${user.Username}/movies/${movieId}`,
       {
@@ -37,20 +30,13 @@ export const MainView = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        setFavMovies(data.FavoriteMovies);
+        setUser(data);
       })
       .catch((error) => {
         console.error("Error adding favorite:", error);
       });
   };
   const removeFav = (movieId) => {
-    // Remove the movieId from the array (favMovies.filter((id) => id !== movieId))
-    const updatedFavMovies = favMovies.filter((id) => id !== movieId);
-    setFavMovies(updatedFavMovies);
-
-    // Save the updated favMovies array to localStorage
-    localStorage.setItem("favMovies", JSON.stringify(updatedFavMovies));
-
     fetch(
       `https://ajmovies-fc7e7627ec3d.herokuapp.com/users/${user.Username}/movies/${movieId}`,
       {
@@ -63,7 +49,7 @@ export const MainView = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        setFavMovies(data.FavoriteMovies);
+        setUser(data);
       })
       .catch((error) => {
         console.error("Error removing favorite:", error);
@@ -74,23 +60,6 @@ export const MainView = () => {
     if (!token) {
       return;
     }
-    // Load hearted movies from local storage
-    const storedFavMovies = JSON.parse(localStorage.getItem("favMovies"));
-    if (storedFavMovies) {
-      setFavMovies(storedFavMovies);
-    }
-    // Fetch the user's favorite movies
-    fetch(
-      `https://ajmovies-fc7e7627ec3d.herokuapp.com/users/${user.Username}}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setFavMovies(data.FavoriteMovies);
-      })
-      .catch((error) => console.error("Error:", error));
 
     fetch("https://ajmovies-fc7e7627ec3d.herokuapp.com/movies", {
       headers: { Authorization: `Bearer ${token}` },
@@ -120,6 +89,7 @@ export const MainView = () => {
         });
 
         setMovies(moviesFromApi);
+        setReady(true);
       });
   }, [token]);
   return (
@@ -166,7 +136,6 @@ export const MainView = () => {
                         onLoggedIn={(user, token) => {
                           setUser(user);
                           setToken(token);
-                          setFavMovies(user.FavoriteMovies);
                         }}
                       />
                     </Col>
@@ -181,6 +150,8 @@ export const MainView = () => {
                 <>
                   {!user ? (
                     <Navigate to="/login" replace />
+                  ) : !ready ? (
+                    <Col> Loading...</Col>
                   ) : movies.length === 0 ? (
                     <Col> The list is empty!</Col>
                   ) : (
@@ -211,7 +182,7 @@ export const MainView = () => {
                           <Col className="mb-4" key={movie._id} md={3}>
                             <MovieCard
                               movie={movie}
-                              isFav={favMovies.includes(movie._id)}
+                              user={user}
                               addFav={addFav}
                               removeFav={removeFav}
                             />
@@ -229,18 +200,15 @@ export const MainView = () => {
                 <>
                   {!user ? (
                     <Navigate to="/login" replace />
-                  ) : movies.length === 0 ? (
-                    <Col> The list is empty!</Col>
+                  ) : !ready ? (
+                    <Col> Loading...</Col>
                   ) : (
                     <Col md={8}>
                       <MovieView
                         addFav={addFav}
                         removeFav={removeFav}
-                        token={token}
-                        movie={movies.find((movie) => movie.Title === title)}
                         movies={movies}
                         user={user}
-                        favMovies={favMovies}
                       />
                     </Col>
                   )}
@@ -251,14 +219,23 @@ export const MainView = () => {
             <Route
               path="/profile"
               element={
-                <ProfileView
-                  user={user}
-                  setUser={setUser}
-                  movies={movies}
-                  addFav={addFav}
-                  removeFav={removeFav}
-                  favMovies={favMovies}
-                />
+                <>
+                  {!user ? (
+                    <Navigate to="/login" replace />
+                  ) : !ready ? (
+                    <Col> Loading...</Col>
+                  ) : (
+                    <Col md={8}>
+                      <ProfileView
+                        user={user}
+                        setUser={setUser}
+                        movies={movies}
+                        addFav={addFav}
+                        removeFav={removeFav}
+                      />
+                    </Col>
+                  )}
+                </>
               }
             />
           </Routes>
