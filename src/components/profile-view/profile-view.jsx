@@ -21,7 +21,7 @@ export function ProfileView({ movies, user, setUser, addFav, removeFav }) {
             </Card.Body>
           </Card>
         </Col>
-        <Col xs={12} sm={8}>
+        <Col sm={12} md={8}>
           <Card>
             <Card.Body>
               <UpdateUser user={user} setUser={setUser} />
@@ -33,7 +33,7 @@ export function ProfileView({ movies, user, setUser, addFav, removeFav }) {
         {movies
           .filter((movie) => user.FavoriteMovies.includes(movie._id))
           .map((movie) => (
-            <Col className="mb-4" key={movie._id} md={3}>
+            <Col className="mb-4" key={movie._id} md={4}>
               <MovieCard
                 movie={movie}
                 addFav={addFav}
