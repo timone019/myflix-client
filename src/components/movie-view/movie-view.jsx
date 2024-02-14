@@ -6,34 +6,22 @@ import { Heart, HeartFill } from "react-bootstrap-icons";
 import { Container, Col, Row, Card } from "react-bootstrap";
 import { MovieCard } from "../movie-card/movie-card";
 
-export const MovieView = ({ user, addFav, removeFav, favMovies, movies }) => {
+export const MovieView = ({ user, addFav, removeFav, movies }) => {
   const { title } = useParams();
-  const [movie, setMovie] = useState(null);
-  const [similarMovies, setSimilarMovies] = useState([]);
-  const [isFav, setIsFav] = useState(false);
 
-  useEffect(() => {
-    const foundMovie = movies.find((m) => m.Title === title);
-    setMovie(foundMovie);
+  const movie = movies.find((m) => m.Title === title);
 
-    if (foundMovie) {
-      const similarMoviesList = movies.filter(
-        (m) =>
-          m.Genre.Name === foundMovie.Genre.Name && m._id !== foundMovie._id
-      );
-      setSimilarMovies(similarMoviesList);
-      setIsFav(user.FavoriteMovies.includes(foundMovie._id));
-    }
-  }, [title, movies, user]);
+  const similarMovies = movies.filter(
+    (m) => m.Genre.Name === movie.Genre.Name && m._id !== movie._id
+  );
 
+  const isFav = user.FavoriteMovies.find((mId) => movie._id === mId);
   const handleAddFav = (movieId) => {
     addFav(movieId);
-    setIsFav(true);
   };
 
   const handleRemoveFav = (movieId) => {
     removeFav(movieId);
-    setIsFav(false);
   };
 
   return (
@@ -114,7 +102,7 @@ export const MovieView = ({ user, addFav, removeFav, favMovies, movies }) => {
                         movie={movie}
                         addFav={addFav}
                         removeFav={removeFav}
-                        isFav={favMovies.includes(movie._id)}
+                        user={user}
                       />
                     </Col>
                   ))}
@@ -132,6 +120,5 @@ MovieView.propTypes = {
   user: PropTypes.object.isRequired,
   addFav: PropTypes.func.isRequired,
   removeFav: PropTypes.func.isRequired,
-  favMovies: PropTypes.array.isRequired,
   movies: PropTypes.array.isRequired,
 };

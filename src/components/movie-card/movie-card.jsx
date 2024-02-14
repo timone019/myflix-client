@@ -5,7 +5,9 @@ import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Heart, HeartFill } from "react-bootstrap-icons";
 
-export const MovieCard = ({ movie, isFav, addFav, removeFav }) => {
+export const MovieCard = ({ user, movie, addFav, removeFav }) => {
+  const isFav = user.FavoriteMovies.find((mId) => mId === movie._id);
+
   return (
     <Card className="h-100">
       <Card.Img variant="top" src={movie.ImagePath} />
@@ -48,6 +50,7 @@ MovieCard.propTypes = {
   }).isRequired,
   addFav: PropTypes.func.isRequired,
   removeFav: PropTypes.func.isRequired,
-  isFav: PropTypes.bool.isRequired,
-  favMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  user: PropTypes.shape({
+    favoriteMovies: PropTypes.arrayOf(PropTypes.string),
+  }),
 };
