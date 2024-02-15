@@ -27581,24 +27581,13 @@ const MovieCard = ({ user, movie, addFav, removeFav })=>{
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Body, {
                 children: [
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        children: isFav ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrapIcons.HeartFill), {
-                            color: "red",
-                            size: 20,
-                            className: "fav-button mt-2 me-2 top-0 end-0",
-                            onClick: ()=>removeFav(movie._id)
+                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrapIcons.Heart), {
+                            className: `heart ${isFav ? "filled" : ""}`,
+                            onClick: ()=>isFav ? removeFav(movie._id) : addFav(movie._id)
                         }, void 0, false, {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 17,
-                            columnNumber: 13
-                        }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrapIcons.Heart), {
-                            color: "red",
-                            size: 20,
-                            className: "fav-button mt-2 me-2 top-0 end-0",
-                            onClick: ()=>addFav(movie._id)
-                        }, void 0, false, {
-                            fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 24,
-                            columnNumber: 13
+                            lineNumber: 16,
+                            columnNumber: 11
                         }, undefined)
                     }, void 0, false, {
                         fileName: "src/components/movie-card/movie-card.jsx",
@@ -27609,14 +27598,14 @@ const MovieCard = ({ user, movie, addFav, removeFav })=>{
                         children: movie.Title
                     }, void 0, false, {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 32,
+                        lineNumber: 21,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Title, {
                         children: movie.Year
                     }, void 0, false, {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 33,
+                        lineNumber: 22,
                         columnNumber: 9
                     }, undefined)
                 ]
@@ -27632,12 +27621,12 @@ const MovieCard = ({ user, movie, addFav, removeFav })=>{
                     children: "Open"
                 }, void 0, false, {
                     fileName: "src/components/movie-card/movie-card.jsx",
-                    lineNumber: 37,
+                    lineNumber: 26,
                     columnNumber: 9
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/movie-card/movie-card.jsx",
-                lineNumber: 36,
+                lineNumber: 25,
                 columnNumber: 7
             }, undefined)
         ]
