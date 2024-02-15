@@ -219,13 +219,13 @@ export const MainView = () => {
             <Route
               path="/profile"
               element={
-                <>
-                  {!user ? (
-                    <Navigate to="/login" replace />
-                  ) : !ready ? (
-                    <Col> Loading...</Col>
-                  ) : (
-                    <Col md={8}>
+                // <>
+                //   {!user ? (
+                //     <Navigate to="/login" replace />
+                //   ) : !ready ? (
+                //     <Col> Loading...</Col>
+                //   ) : (
+                //     <Col md={8}>
                       <ProfileView
                         user={user}
                         setUser={setUser}
@@ -233,10 +233,11 @@ export const MainView = () => {
                         addFav={addFav}
                         removeFav={removeFav}
                       />
-                    </Col>
-                  )}
-                </>
-              }
+                    // </Col>
+                  // )
+                }
+                // </>
+              // }
             />
           </Routes>
         </Row>
