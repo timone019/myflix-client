@@ -11,21 +11,10 @@ export const MovieCard = ({ movie, isFav, addFav, removeFav }) => {
       <Card.Img variant="top" src={movie.ImagePath} />
       <Card.Body>
         <div>
-          {isFav ? (
-            <HeartFill
-              color="red"
-              size={20}
-              className="fav-button mt-2 me-2 top-0 end-0"
-              onClick={() => removeFav(movie._id)}
-            />
-          ) : (
-            <Heart
-              color="red"
-              size={20}
-              className="fav-button mt-2 me-2 top-0 end-0"
-              onClick={() => addFav(movie._id)}
-            />
-          )}
+          <Heart
+            className={`heart ${isFav ? "filled" : ""}`}
+            onClick={() => (isFav ? removeFav(movie._id) : addFav(movie._id))}
+          />
         </div>
         <Card.Title>{movie.Title}</Card.Title>
         <Card.Title>{movie.Year}</Card.Title>
